@@ -1,0 +1,58 @@
+version: '3'
+services:
+
+  #PHP App
+  app:
+    build:
+      context: .
+      dockerfile: config/dockerfile
+    image: rhamdeew/docker-php-8-fpm-alpine
+    container_name: php_app_creditnote
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./code/:/var/www
+      - ./config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    networks:
+      - default
+
+  #Nginx Service
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_creditnote
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "70:70"
+    volumes:
+      - ./code/:/var/www
+      - ./config/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - default
+  #MySQL Service
+  db:
+    image: mysql:5.7.22
+    container_name: db_creditnote
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3310:3310"
+    volumes:
+      - ./code/db.sql:/home/db.sql
+      - ./config/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_ROOT_PASSWORD: test
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - default
+
+#Docker Networks
+networks:
+  default:
+    name: intranet
