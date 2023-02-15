@@ -19,7 +19,8 @@
     <div class="login-box">
         <div class="login-logo">
 
-
+          <img src="{{URL::asset('/images/logo.png')}}" height="150" width="150"> <br>
+          <a href="{{ url('/home') }}"><b style="font-size: 20px;">Credit Note</b></a>
         </div>
         <!-- /.login-logo -->
         <div class="card">
@@ -36,11 +37,14 @@
         @csrf
 
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email" id="email" name="email">
+          <input type="email" class="form-control" value="{{ old('email') }}" placeholder="Email" id="email" name="email" @error('email') is-invalid @enderror>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
             </div>
+            @error('email')
+            <span class="error invalid-feedback">{{ $message }}</span>
+            @enderror
           </div>
         </div>
         <div class="input-group mb-3">

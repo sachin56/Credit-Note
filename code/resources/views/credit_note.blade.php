@@ -87,7 +87,7 @@
             </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
-            @if ($roles->contains('role_id',4))
+            @if ($roles->contains('role_id',3))
                 <button type="button"><i class="fa fa-download success" aria-hidden="true"></i> File Download</button>
             @endif
             <button type="button" class="btn btn-outline-success submit" id="submit">Save changes</button>
@@ -147,7 +147,7 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label for="rate">Description</label>
+                            <label for="rate">{{ Auth::user()->name }}</label>
                             <textarea  type="text" class="form-control" id="add_description" name="description" placeholder="Enter Description" required ></textarea>
                         </div>
                         <div class="form-group col-md-4">
@@ -733,7 +733,7 @@
         description.done(function(res){  
             var html = "";
 
-            for(var i=0;i<res.length;i++){
+            for(var i=1;i<res.length;i++){
             console.log(res[i].status);
             html +="<div class='row'>";
                 html+='<input type="hidden" id="des_hid_'+i+'" name="des_hid_'+i+'" value='+res[i].id+'>';
