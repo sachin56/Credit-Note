@@ -225,7 +225,7 @@
 {{-- further explanation modal --}}
 
 <div class="modal fade" id="modal_explantion">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Add Credit Note</h4>
@@ -237,11 +237,7 @@
                 <form  id="" enctype="multipart/form-data">
                     <input type="hidden" id="attachment_hid" name="attachment_hid">
                     <div class="row">
-                        <div class="form-group col-md-8">
-                            <label for="rate">Explanation</label>
-                            <textarea type="text" class="form-control" id="attachement_path" name="attachement_path" placeholder="Enter CCM Reference No"></textarea>
-                        </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label for="rate">Assign User</label>
                             <select name="further_assign_user" id="further_assign_user" class="form-control" required data-live-search="true" data-size="5">
                                 <option value="">-- select User --</option>
@@ -250,12 +246,48 @@
                                 @endforeach
                             </select>
                         </div>
+                    </div>  
+                    {{-- <div class="row">
+                        <div class="form-group col-md-8">
+                            <label for="rate">Explanation</label>
+                            <textarea type="text" class="form-control" id="attachement_path" name="attachement_path" placeholder="Enter CCM Reference No"></textarea>
+                        </div>
+                    </div> --}}
+                </form>
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-outline-primary attachment_submit" id="futher_explanation_submit">Save changes</button>
+          </div>
+      </div>
+    </div>
+</div>
+
+{{-- further explanation modal --}}
+
+<div class="modal fade" id="modal_user_explantion">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Credit Note</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form  id="" enctype="multipart/form-data">
+                    <input type="hidden" id="attachment_hid" name="attachment_hid">
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label for="rate">Explanation</label>
+                            <textarea type="text" class="form-control" id="futher_explanation_desc" name="futher_explanation_desc" placeholder="Enter CCM Reference No"></textarea>
+                        </div>
                     </div>
                 </form>
             </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-outline-primary attachment_submit" id="attachment_submit">Save changes</button>
+            <button type="button" class="btn btn-outline-primary attachment_submit" id="user_futher_explanation_submit">Save changes</button>
           </div>
       </div>
     </div>
@@ -608,7 +640,91 @@
         });
 
         $(document).on("click", ".explanation", function(){
+            var descreption_id = $(this).attr('data');
+            var credit_note_id =$("#hid").val();
             $("#modal_explantion").modal('show');
+
+            $("#futher_explanation_submit").click(function(){
+                // if(credit_note_id == ""){
+                    var further_assign_user =$("#further_assign_user").val();
+
+                    $.ajax({
+                        'type': 'ajax',
+                        'dataType': 'json',
+                        'method': 'post',
+                        'data' : {descreption_id:descreption_id,credit_note_id:credit_note_id,further_assign_user:further_assign_user},
+                        'url' : 'credit_note/futher_explanantion',
+                        'async': false,
+                        success:function(data){
+                            add_email_send();
+                            if(data.validation_error){
+                            validation_error(data.validation_error);//if has validation error call this function
+                            }
+
+                            if(data.db_error){
+                            db_error(data.db_error);
+                            }
+
+                            if(data.db_success){
+                                toastr.success(data.db_success);
+                            setTimeout(function(){
+                                $("#modal").modal('hide');
+                                location.reload();
+                            }, 2000);
+                            }
+
+                        },
+                        error: function(jqXHR, exception) {
+                            db_error(jqXHR.responseText);
+                        }
+                    });
+                //}
+            });
+        });
+
+        $(document).on("click", ".user_explanation", function(){
+            var id = $(this).attr('data');
+            console.log(id);
+            $("#modal_user_explantion").modal('show');
+
+            $("#user_futher_explanation_submit").click(function(){
+                // if(credit_note_id == ""){
+                    var futher_explanation_desc =$("#futher_explanation_desc").val();
+
+                    console.log(futher_explanation_desc)
+
+                    $.ajax({
+                        'type': 'ajax',
+                        'dataType': 'json',
+                        'method': 'post',
+                        'data' : {futher_explanation_desc:futher_explanation_desc,id:id},
+                        'url' : 'credit_note/user_futher_explanantion',
+                        'async': false,
+                        success:function(data){
+                            add_email_send();
+                            if(data.validation_error){
+                            validation_error(data.validation_error);//if has validation error call this function
+                            }
+
+                            if(data.db_error){
+                            db_error(data.db_error);
+                            }
+
+                            if(data.db_success){
+                                toastr.success(data.db_success);
+                            setTimeout(function(){
+                                $("#modal").modal('hide');
+                                location.reload();
+                            }, 2000);
+                            }
+
+                        },
+                        error: function(jqXHR, exception) {
+                            db_error(jqXHR.responseText);
+                        }
+                    });
+                //}
+            });
         });
 
         $(document).on("click", ".approve", function(){
@@ -750,10 +866,16 @@
                     html+='<div class="text-right">';
                         if(res[i].status == '0'){
                             html+='<i class="fa fa-check" style="color:green">Approve</i>&nbsp;&nbsp;';
+                            @if ($roles->contains('role_id',4))
                             html+='&nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-sm explanation" data='+res[i].id+'>Further Explenation </button>'; 
+                            @endif
+                            @if ($roles->contains('role_id',5))
+                            html+='&nbsp;<button type="button" class="btn btn-outline-dark btn-sm user_explanation" data='+res[i].id+'>Further Explenation </button>'; 
+                            @endif
                         }else if(res[i].status == '1'){
                             html+='<i class="fa fa-window-close" style="color:red">&nbsp;Reject</i>&nbsp;&nbsp;';
                             html+='&nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-sm explanation" data='+res[i].id+'>Further Explenation </button>'; 
+                            html+='&nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-sm user_explanation" data='+res[i].id+'>Further Explenation </button>'; 
                         }else{
                             html+='<button type="button" class="btn btn-outline-success btn-sm approve" data='+res[i].id+'>Approve</button>';
                             html+='&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm reject" data='+res[i].id+'>Reject</button>';

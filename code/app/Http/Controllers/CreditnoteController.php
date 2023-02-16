@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\credit_note;
 use App\Models\credit_note_description;
 use App\Models\User;
+use App\Models\futher_explanation;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\DB;
@@ -179,6 +180,66 @@ class CreditnoteController extends Controller
             return response()->json(['db_error' =>'Database Error'.$th]);
         } 
 
+    }
+
+    public function futher_explanantion(Request $request){
+
+        $validator = Validator::make($request->all(), [
+
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['validation_error' => $validator->errors()->all()]);
+        }else{
+            try{
+                DB::beginTransaction();
+
+                $futher_explanation = new futher_explanation;
+                $futher_explanation->credit_note_id = $request->credit_note_id;
+                $futher_explanation->description_id = $request->descreption_id;
+                $futher_explanation->assign_user_id = $request->further_assign_user;
+
+                $futher_explanation->save();
+
+                DB::commit();
+                return response()->json(['db_success' => 'Added New branch']);
+
+            }catch(\Throwable $th){
+                DB::rollback();
+                throw $th;
+                return response()->json(['db_error' =>'Database Error'.$th]);
+            }
+
+        }
+    }
+
+    public function user_futher_explanantion(Request $request){
+
+        $validator = Validator::make($request->all(), [
+
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['validation_error' => $validator->errors()->all()]);
+        }else{
+            try{
+                DB::beginTransaction();
+
+                $user_futher_explanation = futher_explanation::where('description_id',$request->id)->first();     
+                $user_futher_explanation->description = $request->futher_explanation_desc;
+                    
+                $user_futher_explanation->save();
+
+                DB::commit();
+                return response()->json(['db_success' => 'Added New Explanation']);
+
+            }catch(\Throwable $th){
+                DB::rollback();
+                throw $th;
+                return response()->json(['db_error' =>'Database Error'.$th]);
+            }
+
+        }
     }
 
 }

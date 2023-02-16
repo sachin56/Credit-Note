@@ -37,6 +37,7 @@ return array(
     'App\\Models\\credit_note' => $baseDir . '/app/Models/credit_note.php',
     'App\\Models\\credit_note_attachment' => $baseDir . '/app/Models/credit_note_attachment.php',
     'App\\Models\\credit_note_description' => $baseDir . '/app/Models/credit_note_description.php',
+    'App\\Models\\futher_explanation' => $baseDir . '/app/Models/futher_explanation.php',
     'App\\Models\\u_roles' => $baseDir . '/app/Models/u_roles.php',
     'App\\Models\\u_user_roles' => $baseDir . '/app/Models/u_user_roles.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',

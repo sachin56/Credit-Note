@@ -551,6 +551,7 @@ class ComposerStaticInita2bb91704c8b9a3d11d94c80b49c3d39
         'App\\Models\\credit_note' => __DIR__ . '/../..' . '/app/Models/credit_note.php',
         'App\\Models\\credit_note_attachment' => __DIR__ . '/../..' . '/app/Models/credit_note_attachment.php',
         'App\\Models\\credit_note_description' => __DIR__ . '/../..' . '/app/Models/credit_note_description.php',
+        'App\\Models\\futher_explanation' => __DIR__ . '/../..' . '/app/Models/futher_explanation.php',
         'App\\Models\\u_roles' => __DIR__ . '/../..' . '/app/Models/u_roles.php',
         'App\\Models\\u_user_roles' => __DIR__ . '/../..' . '/app/Models/u_user_roles.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',

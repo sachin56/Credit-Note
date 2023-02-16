@@ -45,6 +45,8 @@ Route::get('/credit_note/description/{id}',[CreditnoteController::class,'assign_
 Route::get('/credit_note/assignuser/{id}',[CreditnoteController::class,'assign_user']); 
 Route::get('/credit_note/approve/{id}',[CreditnoteController::class,'approve']); 
 Route::get('/credit_note/reject/{id}',[CreditnoteController::class,'reject']); 
+Route::post('/credit_note/futher_explanantion',[CreditnoteController::class,'futher_explanantion']);
+Route::post('/credit_note/user_futher_explanantion',[CreditnoteController::class,'user_futher_explanantion']);
 
 //Credit Note Attachment
 Route::post('/creditnote_attachment',[CreditnoteAttachmentController::class,'store']);
