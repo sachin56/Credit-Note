@@ -10,9 +10,15 @@ use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class CreditnoteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index(){
         $users = User::all();
 
@@ -20,7 +26,7 @@ class CreditnoteController extends Controller
     }
 
     public function create(){
-        $result = credit_note::all();
+        $result = credit_note::where('assign_user',Auth::user()->id)->get();
 
         return DataTables($result)->make(true);
     }
@@ -43,6 +49,11 @@ class CreditnoteController extends Controller
                 $description->assign_user_id = $request->add_assign_user;
 
                 $description->save();
+
+                $value=credit_note_description::find($request->add_credit_hid);  
+                $value->assign_user_description = $request->add_assign_user;
+
+                $value->save();
 
                 DB::commit();
                 return response()->json(['db_success' => 'Added New branch']);
@@ -77,19 +88,10 @@ class CreditnoteController extends Controller
                     $type = 'des_hid_'.$i;
                     $des_description = 'description_'.$i;
                    
+                    $value=credit_note_description::find($request->type);  
+                    $value->assign_user_description = $request->des_description;
 
-
-                    // if($request->$des_hid_0 != null && $request->$des_description != null){
-
-                    //     if($request->$des_id != 0 && $request->$des_description != 0){
-
-                            $value=credit_note_description::find($request->type);
-                            
-                            $value->assign_user_description = $request->des_description;
-                            //dump($value);
-                            $value->save();
-                    //     }
-                    // }
+                    $value->save();
 
                 }
 

@@ -11,6 +11,11 @@ use DataTables;
 
 class CreditnoteAttachmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
 
     public function create($id){
         $result = DB::table('credit_note_attachments')

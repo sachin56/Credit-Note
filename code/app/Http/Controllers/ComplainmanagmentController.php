@@ -13,6 +13,11 @@ use DataTables;
 
 class ComplainmanagmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index(){
         $users = User::all();
         return view('complain_managment')->with(['users'=>$users]);
@@ -84,6 +89,7 @@ class ComplainmanagmentController extends Controller
                 $ceditnote->crm_id = $request->crm_id;
                 $ceditnote->description = $request->description;
                 $ceditnote->assign_user = $request->assign_user;
+                $ceditnote->status = 0;
                 
                 $ceditnote->save();
 

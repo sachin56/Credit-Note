@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class RolesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index(){
         
         return view('u_role');

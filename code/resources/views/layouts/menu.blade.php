@@ -26,6 +26,12 @@
             <p>&nbsp;Credit Note</p>
         </a>
     </li>
+    <li class="nav-item">
+        <a href="/history" class="nav-link">
+            <i class="fas fa-history    "></i>
+            <p>&nbsp;Credit Note History</p>
+        </a>
+    </li>
     @endif
     <!--user Section -->
     @if ($roles->contains('role_id',3))

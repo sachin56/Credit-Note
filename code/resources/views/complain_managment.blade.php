@@ -85,7 +85,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-6">
-            <h1 class="m-0 text-dark">Complain Managment System</h1>
+            <h1 class="m-0 text-dark"></h1>
         </div>
         <div class="col-md-6">
             <ol class="breadcrumb float-sm-right">

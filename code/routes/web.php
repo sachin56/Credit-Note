@@ -8,6 +8,7 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\C_note_reportController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\HistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,3 +73,7 @@ Route::put('/role/{id}',[RolesController::class,'update']);
 Route::delete('/role/{id}',[RolesController::class,'destroy']);
 
 Route::get('/credit_note_report',[C_note_reportController::class,'index']);
+
+Route::get('/history',[HistoryController::class,'index']);
+Route::get('/history/create',[HistoryController::class,'create']);
+Route::delete('/history/{id}',[HistoryController::class,'destroy']);
