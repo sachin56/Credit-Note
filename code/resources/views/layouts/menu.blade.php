@@ -33,6 +33,14 @@
         </a>
     </li>
     @endif
+    @if ($roles->contains('role_id',5))
+    <li class="nav-item">
+        <a href="/futher_explanation" class="nav-link">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>&nbsp;Futher Explanatin</p>
+        </a>
+    </li>
+    @endif
     <!--user Section -->
     @if ($roles->contains('role_id',3))
     <li class="nav-item">

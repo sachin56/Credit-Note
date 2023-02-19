@@ -26,7 +26,7 @@ class CreditnoteController extends Controller
     }
 
     public function create(){
-        $result = credit_note::where('assign_user',Auth::user()->id)->get();
+        $result = credit_note::where('user',Auth::user()->id)->get();
 
         return DataTables($result)->make(true);
     }
@@ -54,6 +54,13 @@ class CreditnoteController extends Controller
                 $value->assign_user_description = $request->add_assign_user;
 
                 $value->save();
+
+                $credit_note=credit_note::find($request->add_credit_hid);
+                $credit_note->user=$request->add_assign_user;
+
+                $credit_note->save();
+
+
 
                 DB::commit();
                 return response()->json(['db_success' => 'Added New branch']);
@@ -202,6 +209,11 @@ class CreditnoteController extends Controller
                 $futher_explanation->assign_user_id = $request->further_assign_user;
 
                 $futher_explanation->save();
+
+                $credit_note=credit_note::find($request->credit_note_id);
+                $credit_note->futher_explanantion_user=$request->further_assign_user;
+
+                $credit_note->save();
 
                 DB::commit();
                 return response()->json(['db_success' => 'Added New branch']);

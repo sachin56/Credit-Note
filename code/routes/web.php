@@ -9,7 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\C_note_reportController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\HistoryController;
-
+use App\Http\Controllers\FutherExplanationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -77,3 +77,6 @@ Route::get('/credit_note_report',[C_note_reportController::class,'index']);
 Route::get('/history',[HistoryController::class,'index']);
 Route::get('/history/create',[HistoryController::class,'create']);
 Route::delete('/history/{id}',[HistoryController::class,'destroy']);
+
+Route::get('/futher_explanation',[FutherExplanationController::class,'index']);
+Route::get('/futher_explanation/create',[FutherExplanationController::class,'create']);

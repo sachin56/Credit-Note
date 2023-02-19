@@ -50,7 +50,7 @@
                         </div>                   
                         <div class="form-group col-md-4">
                             <div class="text-right">
-                                <button type="button" class="btn btn-outline-primary attachment">Attachment</button>
+                                <button type="button" class="btn btn-primary attachment">Attachment</button>
                             </div>
                         </div>
                         <br>
@@ -87,8 +87,8 @@
             </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
-            @if ($roles->contains('role_id',4))
-                <button type="button" class="btn btn-outline-success"><i class="fa fa-download success file_download" aria-hidden="true">File Download</i></button>
+            @if ($roles->contains('role_id',3))
+                <button type="button"><i class="fa fa-download success" aria-hidden="true"></i> File Download</button>
             @endif
             <button type="button" class="btn btn-outline-success submit" id="submit">Save changes</button>
           </div>
@@ -147,7 +147,7 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label for="rate">Description</label>
+                            <label for="rate">{{ Auth::user()->name }}</label>
                             <textarea  type="text" class="form-control" id="add_description" name="description" placeholder="Enter Description" required ></textarea>
                         </div>
                         <div class="form-group col-md-4">
@@ -225,7 +225,7 @@
 {{-- further explanation modal --}}
 
 <div class="modal fade" id="modal_explantion">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Add Credit Note</h4>
@@ -237,11 +237,7 @@
                 <form  id="" enctype="multipart/form-data">
                     <input type="hidden" id="attachment_hid" name="attachment_hid">
                     <div class="row">
-                        <div class="form-group col-md-8">
-                            <label for="rate">Explanation</label>
-                            <textarea type="text" class="form-control" id="attachement_path" name="attachement_path" placeholder="Enter CCM Reference No"></textarea>
-                        </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label for="rate">Assign User</label>
                             <select name="further_assign_user" id="further_assign_user" class="form-control" required data-live-search="true" data-size="5">
                                 <option value="">-- select User --</option>
@@ -250,12 +246,48 @@
                                 @endforeach
                             </select>
                         </div>
+                    </div>  
+                    {{-- <div class="row">
+                        <div class="form-group col-md-8">
+                            <label for="rate">Explanation</label>
+                            <textarea type="text" class="form-control" id="attachement_path" name="attachement_path" placeholder="Enter CCM Reference No"></textarea>
+                        </div>
+                    </div> --}}
+                </form>
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-outline-primary attachment_submit" id="futher_explanation_submit">Save changes</button>
+          </div>
+      </div>
+    </div>
+</div>
+
+{{-- further explanation modal --}}
+
+<div class="modal fade" id="modal_user_explantion">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Credit Note</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form  id="" enctype="multipart/form-data">
+                    <input type="hidden" id="attachment_hid" name="attachment_hid">
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label for="rate">Explanation</label>
+                            <textarea type="text" class="form-control" id="futher_explanation_desc" name="futher_explanation_desc" placeholder="Enter CCM Reference No"></textarea>
+                        </div>
                     </div>
                 </form>
             </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-outline-primary attachment_submit" id="attachment_submit">Save changes</button>
+            <button type="button" class="btn btn-outline-primary attachment_submit" id="user_futher_explanation_submit">Save changes</button>
           </div>
       </div>
     </div>
@@ -381,6 +413,80 @@
             
         });
 
+        // add new 
+        $(document).on("click",".addNew",function(){
+
+            empty_form();
+
+            $("#addnew").modal('show');
+            $(".modal-title").html('Save Credit Note');
+            $("#add_submit").html('Save Credit Note');
+            var id = $(this).attr('data');
+
+            $("#add_credit_hid").val(id);
+
+            $.ajax({
+                'type': 'ajax',
+                'dataType': 'json',
+                'method': 'get',
+                'url': 'credit_note/'+id,
+                'async': false,
+                success: function(data){
+                    $("#add_reference_no").val(data.reference_number);
+                    $("#add_customer_name").val(data.customer_name);
+                    $("#add_credit_note_amount").val(data.credit_note_amount);
+                    $("#add_invove_no").val(data.invoice_no);
+                    $("#add_awb").val(data.awb);
+                    $("#add_calculation").val(data.calculation);
+                    $("#add_crm_description").val(data.crm_description);
+                }
+            });
+
+
+            $("#add_submit").click(function(){
+                $("#add_submit").css("display","none");
+                var add_hid =$("#add_hid").val();
+                //save bank
+                if(add_hid == ""){
+                    var add_description =$("#add_description").val();
+                    var add_assign_user =$("#add_assign_user").val();
+                    var add_credit_hid =$("#add_credit_hid").val();
+
+                    $.ajax({
+                    'type': 'ajax',
+                    'dataType': 'json',
+                    'method': 'post',
+                    'data' : {add_description:add_description,add_assign_user:add_assign_user,add_credit_hid:add_credit_hid},
+                    'url' : 'credit_note',
+                    'async': false,
+                    success:function(data){
+                        add_email_send();
+                        if(data.validation_error){
+                        validation_error(data.validation_error);//if has validation error call this function
+                        }
+
+                        if(data.db_error){
+                        db_error(data.db_error);
+                        }
+
+                        if(data.db_success){
+                            toastr.success(data.db_success);
+                        setTimeout(function(){
+                            $("#modal").modal('hide');
+                            location.reload();
+                        }, 2000);
+                        }
+
+                    },
+                    error: function(jqXHR, exception) {
+                        db_error(jqXHR.responseText);
+                    }
+                    });
+                };
+            });
+        });
+
+
         //complain edit
         $(document).on("click", ".edit", function(){
             $("#submit").css("display","none");
@@ -391,7 +497,7 @@
             $("#hid").val(id);
             
             $("#modal").modal('show');
-            $(".modal-title").html('Add Credit Note History');
+            $(".modal-title").html('Add Credit Note');
             $("#submit").html('Add Credit Note');
             assign_description();
             // description_app ();
@@ -484,12 +590,12 @@
                             'type': 'ajax',
                             'dataType': 'json',
                             'method': 'delete',
-                            'url': 'history/'+id,
+                            'url': 'employee/'+id,
                             'async': false,
                             success: function(data){
 
                             if(data){
-                                toastr.success('Credit Note Deleted');
+                                toastr.success('Employee Deleted');
                                 setTimeout(function(){
                                 location.reload();
                                 }, 2000);
@@ -504,7 +610,231 @@
             });
 
         });
+
+        $(document).on("click", ".assign_user_", function(){
+
+            var id = $("#hid").val();
+            
+            $.ajax({
+                'type': 'ajax',
+                'dataType': 'json',
+                'method': 'get',
+                'url': 'credit_note/assignuser/'+id,
+                'async': false,
+                success: function(data){
+                    console.log(data);
+                    var html = "";
+
+                    html+="<option value=''>-- select user --</option>";
+ 
+                        for(var i =0; i < data.length; i++){
+                            html+="<option value='"+data[i].id+"'>"+data[i].email+"</option>";
+                        }
+
+                    $("#assign_user_one").html(html);
+                    //$("#assign_user_one").select2("destroy");
+
+                }
+            });    
+
+        });
+
+        $(document).on("click", ".explanation", function(){
+            var descreption_id = $(this).attr('data');
+            var credit_note_id =$("#hid").val();
+            $("#modal_explantion").modal('show');
+
+            $("#futher_explanation_submit").click(function(){
+                // if(credit_note_id == ""){
+                    var further_assign_user =$("#further_assign_user").val();
+
+                    $.ajax({
+                        'type': 'ajax',
+                        'dataType': 'json',
+                        'method': 'post',
+                        'data' : {descreption_id:descreption_id,credit_note_id:credit_note_id,further_assign_user:further_assign_user},
+                        'url' : 'credit_note/futher_explanantion',
+                        'async': false,
+                        success:function(data){
+                            add_email_send();
+                            if(data.validation_error){
+                            validation_error(data.validation_error);//if has validation error call this function
+                            }
+
+                            if(data.db_error){
+                            db_error(data.db_error);
+                            }
+
+                            if(data.db_success){
+                                toastr.success(data.db_success);
+                            setTimeout(function(){
+                                $("#modal").modal('hide');
+                                location.reload();
+                            }, 2000);
+                            }
+
+                        },
+                        error: function(jqXHR, exception) {
+                            db_error(jqXHR.responseText);
+                        }
+                    });
+                //}
+            });
+        });
+
+        $(document).on("click", ".user_explanation", function(){
+            var id = $(this).attr('data');
+            console.log(id);
+            $("#modal_user_explantion").modal('show');
+
+            $("#user_futher_explanation_submit").click(function(){
+                // if(credit_note_id == ""){
+                    var futher_explanation_desc =$("#futher_explanation_desc").val();
+
+                    console.log(futher_explanation_desc)
+
+                    $.ajax({
+                        'type': 'ajax',
+                        'dataType': 'json',
+                        'method': 'post',
+                        'data' : {futher_explanation_desc:futher_explanation_desc,id:id},
+                        'url' : 'credit_note/user_futher_explanantion',
+                        'async': false,
+                        success:function(data){
+                            add_email_send();
+                            if(data.validation_error){
+                            validation_error(data.validation_error);//if has validation error call this function
+                            }
+
+                            if(data.db_error){
+                            db_error(data.db_error);
+                            }
+
+                            if(data.db_success){
+                                toastr.success(data.db_success);
+                            setTimeout(function(){
+                                $("#modal").modal('hide');
+                                location.reload();
+                            }, 2000);
+                            }
+
+                        },
+                        error: function(jqXHR, exception) {
+                            db_error(jqXHR.responseText);
+                        }
+                    });
+                //}
+            });
+        });
+
+        $(document).on("click", ".approve", function(){
+            var id = $(this).attr('data');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, approve it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            'type': 'ajax',
+                            'dataType': 'json',
+                            'method': 'get',
+                            'url': '/credit_note/approve/'+id,
+                            'async': false,
+                            success: function(data){
+
+                            if(data){
+                                toastr.success('Employee Deleted');
+                                setTimeout(function(){
+                                location.reload();
+                                }, 2000);
+
+                            }
+
+                            }
+                        });
+
+                    }
+
+            });
+
+        });
+
+        $(document).on("click", ".reject", function(){
+            var id = $(this).attr('data');
+
+            Swal.fire({ 
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Reject it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            'type': 'ajax',
+                            'dataType': 'json',
+                            'method': 'get',
+                            'url': '/credit_note/reject/'+id,
+                            'async': false,
+                            success: function(data){
+
+                            if(data){
+                                toastr.success('Employee Deleted');
+                                setTimeout(function(){
+                                location.reload();
+                                }, 2000);
+
+                            }
+
+                            }
+                        });
+
+                    }
+
+            });
+
+        });
+
     });
+
+    function add_email_send(){
+        var id =$("#add_assign_user").val();
+
+        $.ajax({
+                'type': 'ajax',
+                'dataType': 'json',
+                'method': 'get',
+                'url': 'email/'+id,
+                'async': false,
+                success: function(data){
+                    console.log('email sent');
+                }
+            })  
+    }
+
+    function further_email_send(){
+        var id =$("#add_assign_user").val();
+
+        $.ajax({
+                'type': 'ajax',
+                'dataType': 'json',
+                'method': 'get',
+                'url': 'email/'+id,
+                'async': false,
+                success: function(data){
+                    console.log('email sent');
+                }
+            })  
+    }
+
     function assign_description() {
 
         var id =$("#hid").val();
@@ -520,29 +850,32 @@
             var html = "";
 
             for(var i=1;i<res.length;i++){
-                html +="<div class='row'>";
-                    html+='<input type="hidden" id="des_hid_'+i+'" name="des_hid_'+i+'" value='+res[i].id+'>';
-                    html+='<input type="hidden" id="des_lenghth" name="des_lenghth" value='+res.length+'>';
-                    html+='<div class="form-group col-md-6">';
-                        html+='<label>'+res[i].name+'</label>';
-                        html+='<textarea type="text" class="form-control" id="description_'+i+'" name="description_'+i+'" placeholder="Enter Description" required readonly>'+res[i].assign_user_description+'</textarea>';  
-                    html+='</div>';
-                    html+='<div class="form-group col-md-3" hidden>';
-                        html+='<label for="rate">Assign User</label>';
-                        html+='<input type="text" class="form-control" value='+res[i].name+' readonly>';
-                    html+='</div>';
-                    html+='<div class="form-group col-md-4">';
-                        html+='<div class="text-right">';
-                            if(res[i].status == '0'){
-                                html+='<i class="fa fa-check" style="color:green">Approve</i>&nbsp;&nbsp;';
-                            }else if(res[i].status == '1'){
-                                html+='<i class="fa fa-window-close" style="color:red">&nbsp;Reject</i>&nbsp;&nbsp;';
-                            }else{
-                                html+='<i class="fas fa-spinner" style="color:#ffcc00">&nbsp;Pending</i>';
-                            }
+            console.log(res[i].status);
+            html +="<div class='row'>";
+                html+='<input type="hidden" id="des_hid_'+i+'" name="des_hid_'+i+'" value='+res[i].id+'>';
+                html+='<input type="hidden" id="des_lenghth" name="des_lenghth" value='+res.length+'>';
+                html+='<div class="form-group col-md-6">';
+                    html+='<label>'+res[i].name+'</label>';
+                       html+='<textarea type="text" class="form-control" id="description_'+i+'" name="description_'+i+'" placeholder="Enter Description" required readonly>'+res[i].assign_user_description+'</textarea>';  
+                html+='</div>';
+                html+='<div class="form-group col-md-3" hidden>';
+                    html+='<label for="rate">Assign User</label>';
+                    html+='<input type="text" class="form-control" value='+res[i].name+' readonly>';
+                html+='</div>';
+                html+='<div class="form-group col-md-4">';
+                    html+='<div class="text-right">';
+                        if(res[i].status == '0'){
+                            @if ($roles->contains('role_id',5))
+                            html+='&nbsp;<button type="button" class="btn btn-outline-dark btn-sm user_explanation" data='+res[i].id+'>Further Explenation </button>'; 
+                            @endif
+                        }else if(res[i].status == '1'){
+                            @if ($roles->contains('role_id',5))
+                            html+='&nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-sm user_explanation" data='+res[i].id+'>Further Explenation </button>'; 
+                            @endif
+                        }
 
-                        html+='</div>';
                     html+='</div>';
+                html+='</div>';
                 html+='</div>';    
             }
             $("#assign_description_textarea").append(html);
@@ -564,7 +897,7 @@
             "recordsFiltered": 28,
             'ajax': {
                         'method': 'get',
-                        'url': '/history/create'
+                        'url': '/credit_note/create'
                     },
             'columns': [
                 {data: "reference_number"},
@@ -577,7 +910,6 @@
                     render: function(d){
                         var html = "";
                         html+="&nbsp;&nbsp;<td><button class='btn btn-warning btn-sm edit' data='"+d.id+"' title='Edit'><i class='fas fa-edit' ></i></button>";
-                        html+="&nbsp;<button class='btn btn-danger btn-sm delete' data='"+d.id+"'title='Delete'><i class='fas fa-trash'></i></button>";
                         return html;
 
                     }

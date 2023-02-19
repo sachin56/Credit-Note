@@ -26,6 +26,8 @@ class CreateCreditNotesTable extends Migration
             $table->string('crm_description');
             $table->integer('assign_user');
             $table->integer('status')->nullable();
+            $table->integer('user')->nullable();
+            $table->integer('futher_explanantion_user')->nullable();
             $table->timestamps();
         });
     }
