@@ -73,6 +73,7 @@ Route::put('/role/{id}',[RolesController::class,'update']);
 Route::delete('/role/{id}',[RolesController::class,'destroy']);
 
 Route::get('/credit_note_report',[C_note_reportController::class,'index']);
+Route::get('/credit_note_report/{id}',[C_note_reportController::class,'export']);
 
 Route::get('/history',[HistoryController::class,'index']);
 Route::get('/history/create',[HistoryController::class,'create']);

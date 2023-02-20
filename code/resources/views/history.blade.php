@@ -504,6 +504,13 @@
             });
 
         });
+
+        $(document).on("click", ".download", function(){
+            var id = $(this).attr('data');
+
+            window.open('credit_note_report/'+id, '_blank');
+
+        });
     });
     function assign_description() {
 
@@ -578,6 +585,7 @@
                         var html = "";
                         html+="&nbsp;&nbsp;<td><button class='btn btn-warning btn-sm edit' data='"+d.id+"' title='Edit'><i class='fas fa-edit' ></i></button>";
                         html+="&nbsp;<button class='btn btn-danger btn-sm delete' data='"+d.id+"'title='Delete'><i class='fas fa-trash'></i></button>";
+                        html+="&nbsp;<button class='btn btn-success btn-sm download' data='"+d.id+"'title='File Download'><i class='fas fa-download'></i></button>";
                         return html;
 
                     }

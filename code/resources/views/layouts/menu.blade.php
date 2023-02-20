@@ -4,7 +4,7 @@
     <li class="nav-item">
         <a href="/home" class="nav-link dashboard_route">
             <i class="nav-icon fas fa-home"></i>
-            <p>Dashboard</p>
+            <p>Home</p>
         </a>
     </li>
 

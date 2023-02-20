@@ -850,7 +850,6 @@
             var html = "";
 
             for(var i=1;i<res.length;i++){
-            console.log(res[i].status);
             html +="<div class='row'>";
                 html+='<input type="hidden" id="des_hid_'+i+'" name="des_hid_'+i+'" value='+res[i].id+'>';
                 html+='<input type="hidden" id="des_lenghth" name="des_lenghth" value='+res.length+'>';
