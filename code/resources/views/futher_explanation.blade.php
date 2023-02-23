@@ -87,9 +87,6 @@
             </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
-            @if ($roles->contains('role_id',3))
-                <button type="button"><i class="fa fa-download success" aria-hidden="true"></i> File Download</button>
-            @endif
             <button type="button" class="btn btn-outline-success submit" id="submit">Save changes</button>
           </div>
       </div>
@@ -897,7 +894,7 @@
             "recordsFiltered": 28,
             'ajax': {
                         'method': 'get',
-                        'url': '/credit_note/create'
+                        'url': '/futher_explanation/create'
                     },
             'columns': [
                 {data: "reference_number"},

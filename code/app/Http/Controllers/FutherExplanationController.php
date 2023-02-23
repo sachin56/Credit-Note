@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 use App\Models\credit_note;
 use App\Models\User;
-
+use DataTables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FutherExplanationController extends Controller
 {

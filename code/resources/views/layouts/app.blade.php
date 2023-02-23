@@ -80,7 +80,7 @@
                         </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                     <li class="user-footer">
-                        <a href="" class="btn btn-default btn-flat btn-lg btn-block"> User Profile</a>
+                        <button class="btn btn-default btn-flat btn-lg btn-block user_profile"> User Profile</button> 
                         <a href="#" class="btn btn-default btn-flat btn-lg btn-block"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             Log out
@@ -103,7 +103,7 @@
                 @yield('content')
             </section>
         </div>
-
+            
         <!-- Main Footer -->
         <footer class="main-footer">
             <!-- <div class="float-right d-none d-sm-block">
@@ -111,6 +111,9 @@
             </div> -->
             <strong>Copyright &copy; 2022 <a href="https://www.wearedesigners.net/">ADVEX</a>.</strong> All rights
             reserved.
+        </footer>
+        <footer class="main-footer text-right">
+            <strong>Beta Version 0.1</strong>
         </footer>
 </div>
 
@@ -174,5 +177,43 @@
     width:600px !important;
 }
 </style>
+
+<div class="modal fade" id="modal">
+    <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">User Profile</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form  id="myForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" value ="{{Auth::user()->name}}" name="username" placeholder="Enter Username" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email"  value ="{{Auth::user()->email}}" name="email" placeholder="Enter email" readonly>
+                    </div>
+                </form>
+            </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+            {{-- <button type="button" class="btn btn-outline-success submit" id="submit">Save changes</button> --}}
+        </div>
+    </div>
+    </div>
+</div>
+
+<script>
+    $(document).on("click", ".user_profile", function(){
+        $("#modal").modal('show');
+    });
+</script>
+
+
+
 </body>
 </html>

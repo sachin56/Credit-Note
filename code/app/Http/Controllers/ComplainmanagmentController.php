@@ -90,6 +90,7 @@ class ComplainmanagmentController extends Controller
                 $ceditnote->description = $request->description;
                 $ceditnote->assign_user = $request->assign_user;
                 $ceditnote->status = 0;
+                $ceditnote->user = $request->assign_user;
                 
                 $ceditnote->save();
 

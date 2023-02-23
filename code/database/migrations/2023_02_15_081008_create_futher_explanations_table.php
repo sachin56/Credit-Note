@@ -17,7 +17,7 @@ class CreateFutherExplanationsTable extends Migration
             $table->id();
             $table->integer('credit_note_id');
             $table->integer('description_id');
-            $table->integer('assign_user_id');
+            $table->integer('futherex_assign_user_id');
             $table->string('description')->nullable();
             $table->timestamps();
         });

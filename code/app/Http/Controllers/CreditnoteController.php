@@ -206,7 +206,7 @@ class CreditnoteController extends Controller
                 $futher_explanation = new futher_explanation;
                 $futher_explanation->credit_note_id = $request->credit_note_id;
                 $futher_explanation->description_id = $request->descreption_id;
-                $futher_explanation->assign_user_id = $request->further_assign_user;
+                $futher_explanation->futherex_assign_user_id = $request->further_assign_user;
 
                 $futher_explanation->save();
 

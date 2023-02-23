@@ -16,23 +16,23 @@
                 <form>
                 <input type="hidden" id="hid" name="hid">
                 <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-12">
                     <label for="name">Username</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter Username" required readonly>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-8">
+                    <div class="form-group col-md-12">
                     <label for="email">Email</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" required readonly>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-8">
+                    <div class="form-group col-md-12">
                         <label>Roles</label>
-                        <select class="select2" multiple="multiple" style="width: 100%;" id="role_id" name="role_id" data-dropdown-css-class="select2-purple">
+                        <select class="select2" multiple="multiple" style="width: 100%;" id="role_id" name="role_id">
                             @foreach($roles as $role)
-                            <option value="{{ $role->id }}">{{ $role->description }}</option>
+                                <option value="{{ $role->id }}">{{ $role->description }}</option>
                             @endforeach
                         </select>
                       </div>
@@ -102,30 +102,11 @@
         });
         $('.select2').select2();
 
-
-        // $('#role_id').multiselect({
-        //         includeSelectAllOption: true,
-        //         enableFiltering: true,
-        //         numberDisplayed: 50,
-        //         maxHeight: 250,
-        //         enableCaseInsensitiveFiltering:true,
-        //         buttonWidth: '750px'
-        // });
-
-        // $('#project_id').multiselect({
-        //     includeSelectAllOption: true,
-        //     enableFiltering: true,
-        //     numberDisplayed: 50,
-        //     maxHeight: 250,
-        //     enableCaseInsensitiveFiltering:true,
-        //     buttonWidth: '750px'
-        // });
-
         show_role();
 
-        $(document).on("blur",".form-control",function(){
-            $("#submit").css("display","block");
-        });
+        // $(document).on("blur",".form-control",function(){
+        //     $("#submit").css("display","block");
+        // });
 
         $(document).on("click", ".edit", function(){
 
@@ -150,8 +131,6 @@
                     $("#email").val(data.users.email);
 
                     let roles=data.u_user_roles;
-
-                    console.log(roles);
 
                     var u_user_roles = [];
 
