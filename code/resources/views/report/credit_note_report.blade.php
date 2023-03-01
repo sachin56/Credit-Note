@@ -41,18 +41,18 @@ foreach($creditnote as $value){
        
         <tr>
             <td style="width: 40px;text-align: left;padding:3px; border-bottom:none" colspan="3">Advantis Express (Pvt) Ltd</td>
-            <th style="width: 65px; padding:3px;font-size:15px" colspan="6" rowspan="2">CREDIT NOTE CETIFICATE</th>
+            <th style="width: 65px; padding:3px;font-size:15px" colspan="6" rowspan="2">CREDIT NOTE</th>
         </tr>
         <tr>
-            <td style="width: 40px;text-align: left;padding:3px; border-top:none;border-bottom:none" colspan="3">200, Nawala Road, Narahenpita,</td>
+            <td style="width: 40px;text-align: left;padding:3px; border-top:none;border-bottom:none" colspan="3">200, Nawam Mawatha,</td>
         </tr>
         <tr>
-            <td style="width: 40px;text-align: left;padding:3px; border-top:none;border-bottom:none" colspan="3">Colombo 05, Srilanka</td>
+            <td style="width: 40px;text-align: left;padding:3px; border-top:none;border-bottom:none" colspan="3">Colombo 03, Srilanka</td>
             <th style="width: 90px; padding:3px; font-size:14px" colspan="2" rowspan="2">REF NO</th>
             <th style="width: 90px; padding:3px; font-size:14px" colspan="4" rowspan="2">00{{$id}}</th>
         </tr>
         <tr>
-            <td style="width: 40px;text-align: left;padding:3px;border-top:none;border-bottom:none" colspan="3">Tel: Tel: 2808835-44 Fax: 2808846-47 Email: maga@maga.lk</td>
+            <td style="width: 40px;text-align: left;padding:3px;border-top:none;border-bottom:none" colspan="3">Tel:0773 296 762  Email: hiran@fedexlk.com</td>
         </tr>
         <tr>
             <th style="width: 40px;text-align: left;padding:3px;" colspan="2">Customer Name</th>
