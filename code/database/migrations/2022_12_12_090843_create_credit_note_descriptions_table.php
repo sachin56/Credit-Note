@@ -17,8 +17,11 @@ class CreateCreditNoteDescriptionsTable extends Migration
             $table->id();
             $table->integer('credit_note_id');
             $table->string('assign_user_description')->nullable();
-            $table->integer('assign_user_id')->nullable();
+            $table->string('assign_user_id')->nullable();
             $table->integer('status')->nullable();
+            $table->string('futher_assign_hod_description')->nullable();
+            $table->string('futher_assign_user_id')->nullable();
+            $table->string('futher_assign_user_description')->nullable();
             $table->timestamps();
         });
     }

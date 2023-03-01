@@ -11,7 +11,7 @@
     <li class="nav-item">
         <p style="color: #C2C7D0; font-size: 15px; padding-top:10px">&nbsp;Master</p>
     </li>
-    @if ($roles->contains('role_id',3))
+    @if ($roles->contains('role_id',6))
     <li class="nav-item">
         <a href="/complain" class="nav-link">
         <i class="fas fa-table"></i>
@@ -19,7 +19,7 @@
         </a>
     </li>
     @endif
-    @if ($roles->contains('role_id',1))
+    @if ($roles->contains('role_id',2))
     <li class="nav-item">
         <a href="/credit_note" class="nav-link">
             <i class="fas fa-copy"></i>
@@ -27,9 +27,17 @@
         </a>
     </li>
     <li class="nav-item">
+        <a href="/credit_note_history" class="nav-link">
+            <i class="fas fa-book-medical"></i>
+            <p>&nbsp;Credit Note History</p>
+        </a>
+    </li>
+    @endif
+    @if ($roles->contains('role_id',4))
+    <li class="nav-item">
         <a href="/history" class="nav-link">
             <i class="fas fa-history    "></i>
-            <p>&nbsp;Credit Note History</p>
+            <p>&nbsp;History</p>
         </a>
     </li>
     @endif
@@ -42,7 +50,7 @@
     </li>
     @endif
     <!--user Section -->
-    @if ($roles->contains('role_id',3))
+    @if ($roles->contains('role_id',1))
     <li class="nav-item">
         <p style="color: #C2C7D0; font-size: 15px; padding-top:10px">&nbsp;User Management</p>
     </li>

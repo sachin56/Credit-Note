@@ -58,25 +58,28 @@
                         <br>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="rate">Hiran</label>
-                            <textarea  type="text" class="form-control" id="description" name="description" placeholder="Enter Description" required readonly></textarea>
-                        </div>
-                        <div class="form-group col-md-4" hidden>
-                            <label for="rate">Assign User</label>
-                            <select name="assign_user_one" id="assign_user_one" class="form-control" required data-live-search="true" data-size="5">
-                                <option value="">-- select User --</option>
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id}}">{{ $user->email}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        {{-- <div class="form-group col-md-2">
-                            <div class="text-right">
-                                <button type="button" class="btn btn-outline-success btn-sm">Approve</button>
-                                <button type="button" class="btn btn-outline-danger btn-sm">Reject</button>
+                            <div class="col-md-12">
+                              <!-- The time line -->
+                              <div class="timeline">
+                                <!-- timeline time label -->
+                                <div class="time-label">
+                                  <span class="bg-red">Mr Hiran</span>
+                                </div>
+                                <!-- /.timeline-label -->
+                                <!-- timeline item -->
+                                <div>
+                                  <i class="fas fa-envelope bg-blue"></i>
+                                  <div class="timeline-item">
+                                    <span class="time"><i class="fas fa-clock"></i> 12:05</span>
+                                    <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+                  
+                                    <div class="timeline-body" id="description" name="description">
+                    
+                                    </div>
+                                  </div>
+                                </div>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                     <div id="assign_description_textarea">
                         {{-- <button type="button" class="btn btn-primary" id='assign_description_textareas'>Add Section</button> --}}
@@ -88,82 +91,6 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-outline-success submit" id="submit">Save changes</button>
-          </div>
-      </div>
-    </div>
-</div>
-
-{{-- Add Description --}}
-
-<div class="modal fade" id="addnew">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Add Credit Note</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form  id="myForm" enctype="multipart/form-data">
-                    <input type="hidden" id="add_hid" name="add_hid">
-                    <input type="hidden" id="add_credit_hid" name="add_credit_hid">
-                    <div class="row">
-                        <div class="form-group col-md-4">
-                            <label for="rate">CCM Reference No.</label>
-                            <input type="text" class="form-control" id="add_customer_name" name="add_customer_name" placeholder="Enter CCM Reference No" readonly>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="rate">Customer Name</label>
-                            <input type="text" class="form-control" id="add_customer_name" name="add_customer_name" placeholder="Enter Customer Name" readonly>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="rate">Credit Note amount </label>
-                            <input type="text" class="form-control" id="add_credit_note_amount" name="add_credit_note_amount" placeholder="Enter Credit Note amount" readonly>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-4">
-                            <label for="rate">Invoice No.</label>
-                            <input type="text" class="form-control" id="add_invove_no" name="add_invove_no" placeholder="Enter Invoice No" readonly>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="levy">AWB No</label>
-                            <input type="text" class="form-control" id="add_awb" name="add_awb" placeholder="Enter AWB No" readonly>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="rate">Calculation</label>
-                            <input type="text" class="form-control" id="add_calculation" name="add_calculation" placeholder="Enter Calculation" readonly>
-                        </div>
-                    </div>
-                    <div class="row">   
-                        <div class="form-group col-md-8">
-                            <label for="rate">CRM Description</label>
-                            <textarea  type="text" class="form-control" id="add_crm_description" name="add_crm_description" placeholder="Enter Description" required readonly></textarea>
-                        </div>                   
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="rate">{{ Auth::user()->name }}</label>
-                            <textarea  type="text" class="form-control" id="add_description" name="description" placeholder="Enter Description" required ></textarea>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="rate">Assign User</label>
-                            <select name="add_assign_user" id="add_assign_user" class="form-control" required data-live-search="true" data-size="5">
-                                <option value="">-- select User --</option>
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id}}">{{ $user->email}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                        
-                    
-                </form>
-            </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-outline-success add_submit" id="add_submit">Save changes</button>
           </div>
       </div>
     </div>
@@ -438,7 +365,7 @@
                     $("#awb").val(data.awb);
                     $("#calculation").val(data.calculation);
                     $("#crm_description").val(data.crm_description);
-                    $("#description").val(data.description);
+                    $("#description").html(data.description);
                 }
             });
             //user button click submit data to controller
@@ -511,28 +438,63 @@
         description.done(function(res){  
             var html = "";
 
-            for(var i=1;i<res.length;i++){
-            html +="<div class='row'>";
-                html+='<input type="hidden" id="des_hid_'+i+'" name="des_hid_'+i+'" value='+res[i].id+'>';
-                html+='<input type="hidden" id="des_lenghth" name="des_lenghth" value='+res.length+'>';
-                html+='<div class="form-group col-md-6">';
-                    html+='<label>'+res[i].name+'</label>';
-                    html+='<textarea type="text" class="form-control" id="description_'+i+'" name="description_'+i+'" placeholder="Enter Description" required readonly>'+res[i].assign_user_description+'</textarea>';  
-                html+='</div>';
-                html+='<div class="form-group col-md-3" hidden>';
-                    html+='<label for="rate">Assign User</label>';
-                    html+='<input type="text" class="form-control" value='+res[i].name+' readonly>';
-                html+='</div>';
-                html+='<div class="text-right">';
-                    html+='<label>'+res[i].futherex_assign_user_id+'</label>';
-                    html+='<textarea type="text" class="form-control" id="futher_description_'+i+'" name="futher_description_'+i+'" placeholder="Enter Description" required readonly>'+res[i].description+'</textarea>';
-                html+='</div>';
-                html+='<div class="form-group col-md-4">';
-                    html+='<div class="text-right">';
+            for(var i=0;i<res.length;i++){
+                // html += '<div class="content-wrapper">'
+                //     html +='<section class="content">'
+                //         html +='<div class="container-fluid">'
+                            html +='<div class="row">'
+                                html +='<div class="col-md-12">'
+                                    html +='<div class="timeline">'
+                                        html +='<div class="time-label">'
+                                            html +='<span class="bg-red">Mr '+res[i].name+'</span>'
+                                        html +='</div>'
+                                        html +='<div>'
+                                        html +='<i class="fas fa-envelope bg-blue"></i>'
+                                        html +='<div class="timeline-item">'
+                                            html +='<span class="time"><i class="fas fa-clock"></i>'+res[i].created_at+'</span>'
+                                            html +='<h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>'
+                                        html +='<div class="timeline-body">'
+                                            html+=res[i].assign_user_description
+                                            html+='<div class="text-right">';
+                                        if(res[i].status == '0'){
+                                            html+='<i class="fa fa-check" style="color:green">Approve</i>&nbsp;&nbsp;';
+                                            @if ($roles->contains('role_id',4))
+                                            @endif
+                                        }else if(res[i].status == '1'){
+                                            html+='<i class="fa fa-window-close" style="color:red">&nbsp;Reject</i>&nbsp;&nbsp;'; 
+                                        }else{
+                                            html+='<button type="button" class="btn btn-outline-success btn-sm approve" data='+res[i].id+'>Approve</button>';
+                                            html+='&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm reject" data='+res[i].id+'>Reject</button>';
+                                        }
 
-                    html+='</div>';
-                html+='</div>';
-                html+='</div>';    
+                                html+='</div>';
+                                        html +='</div>'
+                                        html +='</div>'
+                                        html +='</div>'
+                                        html +='<div>'
+                                            html +='<i class="fas fa-user bg-green"></i>'
+                                            html +='<div class="timeline-item">'
+                                                html +='<span class="time"><i class="fas fa-clock"></i> '+res[i].updated_at+'</span>'
+                                                html +='<h3 class="timeline-header no-border"><a href="#">Assign by '+res[i].name+'</a> to '+res[i].username+'</h3>'
+                                            html +='</div>'
+                                            html +='</div>'
+                                            html +='<div>'
+                                                html +='<i class="fas fa-comments bg-yellow"></i>'
+                                                html +='<div class="timeline-item">'
+                                                    html +='<span class="time"><i class="fas fa-clock"></i> 27 mins ago</span>'
+                                                    html +='<h3 class="timeline-header"><a href="#">'+res[i].username+'</a> commented on your post</h3>'
+                                                    html +='<div class="timeline-body">'
+                                                        html+=res[i].futher_assign_user_description
+                                                    html +='</div>'
+                                                html +='</div>'
+                                            html +='</div>'
+                                    html +='</div>'
+                                html +='</div>'
+
+                            html +='</div>'
+                //         html +='</div>'
+                //     html +='</section>'
+                // html +='</div>'    
             }
             $("#assign_description_textarea").append(html);
             

@@ -82,6 +82,7 @@ Route::delete('/history/{id}',[HistoryController::class,'destroy']);
 
 Route::get('/futher_explanation',[FutherExplanationController::class,'index']);
 Route::get('/futher_explanation/create',[FutherExplanationController::class,'create']);
+Route::get('/futher_explanation/{id}',[FutherExplanationController::class,'show']);
 
 Route::get('/credit_note_history',[CreditNoteHistoryController::class,'index']);
 Route::get('/credit_note_history/description/{id}',[CreditNoteHistoryController::class,'assign_description']);

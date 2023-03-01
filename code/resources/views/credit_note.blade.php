@@ -58,26 +58,29 @@
                         <br>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="rate">Hiran</label>
-                            <textarea  type="text" class="form-control" id="description" name="description" placeholder="Enter Description" required readonly></textarea>
-                        </div>
-                        <div class="form-group col-md-4" hidden>
-                            <label for="rate">Assign User</label>
-                            <select name="assign_user_one" id="assign_user_one" class="form-control" required data-live-search="true" data-size="5">
-                                <option value="">-- select User --</option>
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id}}">{{ $user->email}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        {{-- <div class="form-group col-md-2">
-                            <div class="text-right">
-                                <button type="button" class="btn btn-outline-success btn-sm">Approve</button>
-                                <button type="button" class="btn btn-outline-danger btn-sm">Reject</button>
+                        <div class="col-md-12">
+                          <!-- The time line -->
+                          <div class="timeline">
+                            <!-- timeline time label -->
+                            <div class="time-label">
+                              <span class="bg-red">Mr Hiran</span>
                             </div>
-                        </div> --}}
+                            <!-- /.timeline-label -->
+                            <!-- timeline item -->
+                            <div>
+                              <i class="fas fa-envelope bg-blue"></i>
+                              <div class="timeline-item">
+                                <span class="time"><i class="fas fa-clock"></i> 12:05</span>
+                                <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+              
+                                <div class="timeline-body" id="description" name="description">
+                
+                                </div>
+                              </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
                     <div id="assign_description_textarea">
                         {{-- <button type="button" class="btn btn-primary" id='assign_description_textareas'>Add Section</button> --}}
                     </div>
@@ -142,14 +145,39 @@
                             <textarea  type="text" class="form-control" id="add_crm_description" name="add_crm_description" placeholder="Enter Description" required readonly></textarea>
                         </div>                   
                     </div>
+                    <div class="card-header">
+                        <h3 class="card-title">HOD Description</h3>
+                    </div>
+                    <br>
                     <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="rate">{{ Auth::user()->name }}</label>
+                        <div class="form-group col-md-8">
+                            <label for="rate">{{Auth::user()->name}}</label>
                             <textarea  type="text" class="form-control" id="add_description" name="description" placeholder="Enter Description" required ></textarea>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="rate">Assign User</label>
                             <select name="add_assign_user" id="add_assign_user" class="form-control" required data-live-search="true" data-size="5">
+                                <option value="">-- select User --</option>
+                                @foreach($users as $user)
+                                    <option value="{{ $user->id}}">{{ $user->email}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-header">
+                        <h3 class="card-title">Futher Explanation</h3>
+                        <div class="card-tools">
+                        </div>
+                    </div>
+                    <br>   
+                    <div class="row">   
+                        <div class="form-group col-md-8">
+                            <label for="rate">Futher Explanation HOD Description</label>
+                            <textarea  type="text" class="form-control" id="futher_description" name="futher_description" placeholder="Enter Description"></textarea>
+                        </div>                   
+                        <div class="form-group col-md-4">
+                            <label for="rate">Assign User</label>
+                            <select name="futher_assign_user" id="futher_assign_user" class="form-control" required data-live-search="true" data-size="5">
                                 <option value="">-- select User --</option>
                                 @foreach($users as $user)
                                     <option value="{{ $user->id}}">{{ $user->email}}</option>
@@ -314,11 +342,12 @@
                     <table class="table table-bordered" id="datatables">
                         <thead>
                             <tr>
-                                <th style="width:20%">Reference Name</th>
-                                <th style="width:20%">Customer Name</th>
+                                <th style="width:15%">Reference Name</th>
+                                <th style="width:15%">Customer Name</th>
                                 <th style="width:20%">AWB</th>
                                 <th style="width:10%">Invoice No</th>
                                 <th style="width:10%">Credit Amount</th>
+                                <th style="width:10%">Assign To</th>
                                 <th style="width:30%">Action</th>
                             </tr>
                         </thead>
@@ -448,12 +477,14 @@
                     var add_description =$("#add_description").val();
                     var add_assign_user =$("#add_assign_user").val();
                     var add_credit_hid =$("#add_credit_hid").val();
-
+                    var futher_description =$("#futher_description").val();
+                    var futher_assign_user =$("#futher_assign_user").val();
+                    
                     $.ajax({
                     'type': 'ajax',
                     'dataType': 'json',
                     'method': 'post',
-                    'data' : {add_description:add_description,add_assign_user:add_assign_user,add_credit_hid:add_credit_hid},
+                    'data' : {add_description:add_description,add_assign_user:add_assign_user,add_credit_hid:add_credit_hid,futher_description:futher_description,futher_assign_user:futher_assign_user},
                     'url' : 'credit_note',
                     'async': false,
                     success:function(data){
@@ -512,7 +543,7 @@
                     $("#awb").val(data.awb);
                     $("#calculation").val(data.calculation);
                     $("#crm_description").val(data.crm_description);
-                    $("#description").val(data.description);
+                    $("#description").html(data.description);
                 }
             });
             //user button click submit data to controller
@@ -746,7 +777,7 @@
                             success: function(data){
 
                             if(data){
-                                toastr.success('Employee Deleted');
+                                toastr.success('Description Approved');
                                 setTimeout(function(){
                                 location.reload();
                                 }, 2000);
@@ -784,7 +815,7 @@
                             success: function(data){
 
                             if(data){
-                                toastr.success('Employee Deleted');
+                                toastr.error('Description Rejected');
                                 setTimeout(function(){
                                 location.reload();
                                 }, 2000);
@@ -846,37 +877,57 @@
         description.done(function(res){  
             var html = "";
 
-            for(var i=1;i<res.length;i++){
-            html +="<div class='row'>";
-                html+='<input type="hidden" id="des_hid_'+i+'" name="des_hid_'+i+'" value='+res[i].id+'>';
-                html+='<input type="hidden" id="des_lenghth" name="des_lenghth" value='+res.length+'>';
-                html+='<div class="form-group col-md-6">';
-                    html+='<label>'+res[i].name+'</label>';
-                       html+='<textarea type="text" class="form-control" id="description_'+i+'" name="description_'+i+'" placeholder="Enter Description" required readonly>'+res[i].assign_user_description+'</textarea>';  
-                html+='</div>';
-                html+='<div class="form-group col-md-3" hidden>';
-                    html+='<label for="rate">Assign User</label>';
-                    html+='<input type="text" class="form-control" value='+res[i].name+' readonly>';
-                html+='</div>';
-                html+='<div class="form-group col-md-4">';
-                    html+='<div class="text-right">';
-                        if(res[i].status == '0'){
-                            html+='<i class="fa fa-check" style="color:green">Approve</i>&nbsp;&nbsp;';
-                            @if ($roles->contains('role_id',4))
-                            html+='&nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-sm explanation" data='+res[i].id+'>Further Explenation </button>'; 
-                            @endif
-                        }else if(res[i].status == '1'){
-                            html+='<i class="fa fa-window-close" style="color:red">&nbsp;Reject</i>&nbsp;&nbsp;';
-                            html+='&nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-sm explanation" data='+res[i].id+'>Further Explenation </button>';  
-                        }else{
-                            html+='<button type="button" class="btn btn-outline-success btn-sm approve" data='+res[i].id+'>Approve</button>';
-                            html+='&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm reject" data='+res[i].id+'>Reject</button>';
-                            html+='&nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-sm explanation" data='+res[i].id+'>Further Explenation </button>';
-                        }
+            for(var i=0;i<res.length;i++){
+                html +='<div class="row">'
+                    html +='<div class="col-md-12">'
+                        html +='<div class="timeline">'
+                            html +='<div class="time-label">'
+                                html +='<span class="bg-red">Mr '+res[i].name+'</span>'
+                            html +='</div>'
+                            html +='<div>'
+                            html +='<i class="fas fa-envelope bg-blue"></i>'
+                            html +='<div class="timeline-item">'
+                                html +='<span class="time"><i class="fas fa-clock"></i>'+res[i].created_at+'</span>'
+                                html +='<h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>'
+                            html +='<div class="timeline-body">'
+                                html+=res[i].assign_user_description
+                                html+='<div class="text-right">';
+                                        if(res[i].status == '0'){
+                                            html+='<i class="fa fa-check" style="color:green">Approve</i>&nbsp;&nbsp;';
+                                            @if ($roles->contains('role_id',4))
+                                            @endif
+                                        }else if(res[i].status == '1'){
+                                            html+='<i class="fa fa-window-close" style="color:red">&nbsp;Reject</i>&nbsp;&nbsp;'; 
+                                        }else{
+                                            html+='<button type="button" class="btn btn-outline-success btn-sm approve" data='+res[i].id+'>Approve</button>';
+                                            html+='&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm reject" data='+res[i].id+'>Reject</button>';
+                                        }
 
-                    html+='</div>';
-                html+='</div>';
-                html+='</div>';    
+                                html+='</div>';
+                            html +='</div>'
+                            html +='</div>'
+                            html +='</div>'
+                            html +='<div>'
+                                html +='<i class="fas fa-user bg-green"></i>'
+                                html +='<div class="timeline-item">'
+                                    html +='<span class="time"><i class="fas fa-clock"></i> '+res[i].updated_at+'</span>'
+                                    html +='<h3 class="timeline-header no-border"><a href="#">Assign by '+res[i].name+'</a> to '+res[i].username+'</h3>'
+                                html +='</div>'
+                                html +='</div>'
+                                html +='<div>'
+                                    html +='<i class="fas fa-comments bg-yellow"></i>'
+                                    html +='<div class="timeline-item">'
+                                        html +='<span class="time"><i class="fas fa-clock"></i> 27 mins ago</span>'
+                                        html +='<h3 class="timeline-header"><a href="#">'+res[i].username+'</a> commented on your post</h3>'
+                                        html +='<div class="timeline-body">'
+                                            html+=res[i].futher_assign_user_description
+                                        html +='</div>'
+                                    html +='</div>'
+                                html +='</div>'
+                        html +='</div>'
+                    html +='</div>'
+
+                html +='</div>'   
             }
             $("#assign_description_textarea").append(html);
             
@@ -905,13 +956,13 @@
                 {data: "awb"},
                 {data: "invoice_no"},
                 {data: "credit_note_amount"},
+                {data: "name"},
                 {
                     data: null,
                     render: function(d){
                         var html = "";
                         html+="&nbsp;&nbsp;<td><button class='btn btn-primary btn-sm addNew' data='"+d.id+"' title='Add'><i class='fa fa-plus' ></i></button>";
                         html+="&nbsp;&nbsp;<td><button class='btn btn-warning btn-sm edit' data='"+d.id+"' title='Edit'><i class='fas fa-edit' ></i></button>";
-                        html+="&nbsp;<button class='btn btn-danger btn-sm delete' data='"+d.id+"'title='Delete'><i class='fas fa-trash'></i></button>";
                         return html;
 
                     }

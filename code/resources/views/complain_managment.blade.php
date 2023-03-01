@@ -4,7 +4,7 @@
 @section('content')
 
 <div class="modal fade" id="modal">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Add Credit Note</h4>
@@ -55,7 +55,21 @@
                     <div class="row">
                         <div class="form-group col-md-12">
                             <label for="rate">Calculation</label>
-                            <input type="text" class="form-control" id="calculation" name="calculation" placeholder="Enter Calculation">
+                            <textarea type="text" class="form-control" id="calculation" name="calculation" placeholder="Enter Calculation"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="rate">Credit Note Date </label>
+                            <input type="date" class="form-control" id="credit_date" name="credit_date" placeholder="Enter Credit Note amount">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="rate">Credit Note amount </label>
+                            <select name="credit_status" id="credit_status" class="form-control" required data-live-search="true" data-size="5">
+                                <option value="0">-- select User --</option>
+                                <option value="1">Pending</option>
+                                <option value="2">Close</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row">
@@ -63,7 +77,7 @@
                             <label for="rate">Hiran</label>
                             <textarea  type="text" class="form-control" id="description" name="description" placeholder="Enter Description" required></textarea>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label for="rate">Assign User</label>
                             <select name="add_assign_user" id="add_assign_user" class="form-control" required data-live-search="true" data-size="5">
                                 <option value="">-- select User --</option>
@@ -129,6 +143,8 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+
         //datatable show
         show_employee();
 
@@ -155,6 +171,7 @@
                     var company =$("#company").val();
                     var employee_email =$("#employee_email").val();
                     var phone_no =$("#phone_no").val();
+
 
                     var formData = new FormData($('#myForm')[0]);
 
@@ -245,6 +262,8 @@
                 var description = $("#description").val();
                 console.log(description);
                 var assign_user = $("#add_assign_user").val();
+                var credit_date =$("#credit_date").val();
+                var credit_status =$("#credit_status").val();
 
 
                 Swal.fire({
@@ -262,7 +281,7 @@
                                 'type': 'ajax',
                                 'dataType': 'json',
                                 'method': 'post',
-                                'data' : {referenceNumber:referenceNumber,c_name:c_name,invoice_no:invoice_no,awb:awb,calculation:calculation,credit_amount:credit_amount,crm_description:crm_description,crm_id:crm_id,description:description,assign_user:assign_user},
+                                'data' : {referenceNumber:referenceNumber,c_name:c_name,invoice_no:invoice_no,awb:awb,calculation:calculation,credit_amount:credit_amount,crm_description:crm_description,crm_id:crm_id,description:description,assign_user:assign_user,credit_date:credit_date,credit_status:credit_status},
                                 'url': '/complain',
                                 'async': false,
                                 success:function(data){

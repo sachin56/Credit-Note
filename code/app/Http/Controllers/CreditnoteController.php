@@ -26,7 +26,12 @@ class CreditnoteController extends Controller
     }
 
     public function create(){
-        $result = credit_note::where('user',Auth::user()->id)->get();
+        
+        $result= DB::table('credit_notes')
+                ->join('users','users.id','=','credit_notes.user')
+                ->where('credit_notes.user',Auth::user()->id)
+                ->select('users.name','credit_notes.*')
+                ->get();
 
         return DataTables($result)->make(true);
     }
@@ -34,7 +39,8 @@ class CreditnoteController extends Controller
     public function store(Request $request){
 
         $validator = Validator::make($request->all(), [
-
+            'add_description' => 'required',
+            'add_assign_user' => 'required',
         ]);
 
         if($validator->fails()){
@@ -47,11 +53,13 @@ class CreditnoteController extends Controller
                 $description->credit_note_id = $request->add_credit_hid;
                 $description->assign_user_description = $request->add_description;
                 $description->assign_user_id = $request->add_assign_user;
+                $description->futher_assign_hod_description = $request->futher_description;
+                $description->futher_assign_user_id = $request->futher_assign_user;
 
                 $description->save();
 
-                $value=credit_note_description::find($request->add_credit_hid);  
-                $value->assign_user_description = $request->add_assign_user;
+                $value=credit_note::find($request->add_credit_hid);  
+                $value->futher_explanantion_user = $request->futher_assign_user;
 
                 $value->save();
 
@@ -63,7 +71,7 @@ class CreditnoteController extends Controller
 
 
                 DB::commit();
-                return response()->json(['db_success' => 'Added New branch']);
+                return response()->json(['db_success' => 'Added New Description']);
 
             }catch(\Throwable $th){
                 DB::rollback();
@@ -132,8 +140,9 @@ class CreditnoteController extends Controller
         
         $result = DB::table('credit_note_descriptions')
                     ->join('users','users.id','=','credit_note_descriptions.assign_user_id')
+                    // ->where('credit_note_descriptions.futher_assign_user_id','=','users.id')
                     ->where('credit_note_descriptions.credit_note_id',$id)
-                    ->select('users.name','credit_note_descriptions.assign_user_description','credit_note_descriptions.assign_user_id','credit_note_descriptions.id','credit_note_descriptions.status')
+                    ->select('users.name as username','users.name as name','credit_note_descriptions.assign_user_description','credit_note_descriptions.created_at','credit_note_descriptions.assign_user_id','credit_note_descriptions.id','credit_note_descriptions.status','credit_note_descriptions.updated_at','credit_note_descriptions.futher_assign_user_description')
                     ->get();
                     
         return response()->json($result); 
@@ -181,7 +190,7 @@ class CreditnoteController extends Controller
                 $value->save();
 
             DB::commit();
-            return response()->json(['db_success' => 'Description Approved']);
+            return response()->json(['db_success' => 'Description reject']);
 
         }catch(\Throwable $th){
             DB::rollback();
@@ -230,6 +239,7 @@ class CreditnoteController extends Controller
     public function user_futher_explanantion(Request $request){
 
         $validator = Validator::make($request->all(), [
+            'futher_explanation_desc' => 'required',
 
         ]);
 
@@ -239,8 +249,8 @@ class CreditnoteController extends Controller
             try{
                 DB::beginTransaction();
 
-                $user_futher_explanation = futher_explanation::where('description_id',$request->id)->first();     
-                $user_futher_explanation->description = $request->futher_explanation_desc;
+                $user_futher_explanation = credit_note_description::find($request->id);     
+                $user_futher_explanation->futher_assign_user_description = $request->futher_explanation_desc;
                     
                 $user_futher_explanation->save();
 

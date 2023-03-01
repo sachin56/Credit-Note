@@ -28,6 +28,8 @@ class CreateCreditNotesTable extends Migration
             $table->integer('status')->nullable();
             $table->integer('user')->nullable();
             $table->integer('futher_explanantion_user')->nullable();
+            $table->integer('crdit_note_status')->nullable();
+            $table->date('crdit_note_close_date')->nullable();
             $table->timestamps();
         });
     }

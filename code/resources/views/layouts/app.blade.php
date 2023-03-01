@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        #loader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.75) url("/your_loading_image.gif") no-repeat center center;
+            z-index: 99999;
+        }
+            </style>
     <meta charset="UTF-8">
     <title>ADVEX</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
@@ -67,12 +80,12 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
         </ul>
-
+        <div id='loader'></div>
         <ul class="navbar-nav ml-auto">
 
             <li class="nav-item dropdown user-menu">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
+                    <span class="d-none d-md-inline">Hello {{ Auth::user()->name }}</span>
                 </a>
                 <a href="#" class="btn btn-default btn-flat btn-lg btn-block"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -106,14 +119,11 @@
             
         <!-- Main Footer -->
         <footer class="main-footer">
-            <!-- <div class="float-right d-none d-sm-block">
-                <b>Version</b> 3.0.5
-            </div> -->
-            <strong>Copyright &copy; 2022 <a href="https://www.wearedesigners.net/">ADVEX</a>.</strong> All rights
+             <div class="float-right d-none d-sm-block">
+                <b>Beta Version</b> 0.0.1
+            </div> 
+            <strong>Copyright &copy; 2023 <a href="https://mhe.lk/">Advantis Express</a>.</strong> All rights
             reserved.
-        </footer>
-        <footer class="main-footer text-right">
-            <strong>Beta Version 0.1</strong>
         </footer>
 </div>
 

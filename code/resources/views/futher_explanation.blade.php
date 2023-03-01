@@ -58,31 +58,30 @@
                         <br>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="rate">Hiran</label>
-                            <textarea  type="text" class="form-control" id="description" name="description" placeholder="Enter Description" required readonly></textarea>
-                        </div>
-                        <div class="form-group col-md-4" hidden>
-                            <label for="rate">Assign User</label>
-                            <select name="assign_user_one" id="assign_user_one" class="form-control" required data-live-search="true" data-size="5">
-                                <option value="">-- select User --</option>
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id}}">{{ $user->email}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        {{-- <div class="form-group col-md-2">
-                            <div class="text-right">
-                                <button type="button" class="btn btn-outline-success btn-sm">Approve</button>
-                                <button type="button" class="btn btn-outline-danger btn-sm">Reject</button>
+                        <div class="col-md-12">
+                          <!-- The time line -->
+                          <div class="timeline">
+                            <!-- timeline time label -->
+                            <div class="time-label">
+                              <span class="bg-red">Mr Hiran</span>
                             </div>
-                        </div> --}}
+                            <!-- /.timeline-label -->
+                            <!-- timeline item -->
+                            <div>
+                              <i class="fas fa-envelope bg-blue"></i>
+                              <div class="timeline-item">
+                                <span class="time"><i class="fas fa-clock"></i> 12:05</span>
+                                <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+              
+                                <div class="timeline-body" id="description" name="description">
+                
+                                </div>
+                              </div>
+                            </div>
+                        </div>
                     </div>
-                    <div id="assign_description_textarea">
-                        {{-- <button type="button" class="btn btn-primary" id='assign_description_textareas'>Add Section</button> --}}
-                    </div>
-                    {{-- <div id="description_type"></div> --}}
-
+                </div>
+                    <div id="assign_description_textarea"></div>
                 </form>
             </div>
           <div class="modal-footer">
@@ -92,83 +91,6 @@
       </div>
     </div>
 </div>
-
-{{-- Add Description --}}
-
-<div class="modal fade" id="addnew">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Add Credit Note</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form  id="myForm" enctype="multipart/form-data">
-                    <input type="hidden" id="add_hid" name="add_hid">
-                    <input type="hidden" id="add_credit_hid" name="add_credit_hid">
-                    <div class="row">
-                        <div class="form-group col-md-4">
-                            <label for="rate">CCM Reference No.</label>
-                            <input type="text" class="form-control" id="add_customer_name" name="add_customer_name" placeholder="Enter CCM Reference No" readonly>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="rate">Customer Name</label>
-                            <input type="text" class="form-control" id="add_customer_name" name="add_customer_name" placeholder="Enter Customer Name" readonly>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="rate">Credit Note amount </label>
-                            <input type="text" class="form-control" id="add_credit_note_amount" name="add_credit_note_amount" placeholder="Enter Credit Note amount" readonly>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-4">
-                            <label for="rate">Invoice No.</label>
-                            <input type="text" class="form-control" id="add_invove_no" name="add_invove_no" placeholder="Enter Invoice No" readonly>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="levy">AWB No</label>
-                            <input type="text" class="form-control" id="add_awb" name="add_awb" placeholder="Enter AWB No" readonly>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="rate">Calculation</label>
-                            <input type="text" class="form-control" id="add_calculation" name="add_calculation" placeholder="Enter Calculation" readonly>
-                        </div>
-                    </div>
-                    <div class="row">   
-                        <div class="form-group col-md-8">
-                            <label for="rate">CRM Description</label>
-                            <textarea  type="text" class="form-control" id="add_crm_description" name="add_crm_description" placeholder="Enter Description" required readonly></textarea>
-                        </div>                   
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="rate">{{ Auth::user()->name }}</label>
-                            <textarea  type="text" class="form-control" id="add_description" name="description" placeholder="Enter Description" required ></textarea>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="rate">Assign User</label>
-                            <select name="add_assign_user" id="add_assign_user" class="form-control" required data-live-search="true" data-size="5">
-                                <option value="">-- select User --</option>
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id}}">{{ $user->email}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                        
-                    
-                </form>
-            </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-outline-success add_submit" id="add_submit">Save changes</button>
-          </div>
-      </div>
-    </div>
-</div>
-
 
 {{-- Attachment modal --}}
 
@@ -194,9 +116,6 @@
             </div>
             <div class="col-md-12">
                 <div class="card">
-                    {{-- <div class="card-header">
-                        <button class="btn btn-primary addNew"><i class="fa fa-plus"></i> Add New Employee</button>
-                    </div> --}}
                     <div class="card-body">
                         <table class="table table-bordered" id="attachmet_datatable">
                             <thead>
@@ -221,52 +140,11 @@
 
 {{-- further explanation modal --}}
 
-<div class="modal fade" id="modal_explantion">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Add Credit Note</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form  id="" enctype="multipart/form-data">
-                    <input type="hidden" id="attachment_hid" name="attachment_hid">
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="rate">Assign User</label>
-                            <select name="further_assign_user" id="further_assign_user" class="form-control" required data-live-search="true" data-size="5">
-                                <option value="">-- select User --</option>
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id}}">{{ $user->email}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>  
-                    {{-- <div class="row">
-                        <div class="form-group col-md-8">
-                            <label for="rate">Explanation</label>
-                            <textarea type="text" class="form-control" id="attachement_path" name="attachement_path" placeholder="Enter CCM Reference No"></textarea>
-                        </div>
-                    </div> --}}
-                </form>
-            </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-outline-primary attachment_submit" id="futher_explanation_submit">Save changes</button>
-          </div>
-      </div>
-    </div>
-</div>
-
-{{-- further explanation modal --}}
-
 <div class="modal fade" id="modal_user_explantion">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Add Credit Note</h4>
+                <h4 class="modal-title-modal_user_explantion">Add Credit Note Explanation</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -276,8 +154,13 @@
                     <input type="hidden" id="attachment_hid" name="attachment_hid">
                     <div class="row">
                         <div class="form-group col-md-12">
+                            <label for="title-hod" id="title-hod" name="title-hod" value="">HOD Explanation</label>
+                            <textarea type="text" class="form-control" id="hod_explanation_desc" name="hod_explanation_desc" readonly></textarea>
+                            <h6>created at : </h6>
+                        </div>
+                        <div class="form-group col-md-12">
                             <label for="rate">Explanation</label>
-                            <textarea type="text" class="form-control" id="futher_explanation_desc" name="futher_explanation_desc" placeholder="Enter CCM Reference No"></textarea>
+                            <textarea type="text" class="form-control" id="futher_explanation_desc" name="futher_explanation_desc" placeholder="Enter Explanation"></textarea>
                         </div>
                     </div>
                 </form>
@@ -410,80 +293,6 @@
             
         });
 
-        // add new 
-        $(document).on("click",".addNew",function(){
-
-            empty_form();
-
-            $("#addnew").modal('show');
-            $(".modal-title").html('Save Credit Note');
-            $("#add_submit").html('Save Credit Note');
-            var id = $(this).attr('data');
-
-            $("#add_credit_hid").val(id);
-
-            $.ajax({
-                'type': 'ajax',
-                'dataType': 'json',
-                'method': 'get',
-                'url': 'credit_note/'+id,
-                'async': false,
-                success: function(data){
-                    $("#add_reference_no").val(data.reference_number);
-                    $("#add_customer_name").val(data.customer_name);
-                    $("#add_credit_note_amount").val(data.credit_note_amount);
-                    $("#add_invove_no").val(data.invoice_no);
-                    $("#add_awb").val(data.awb);
-                    $("#add_calculation").val(data.calculation);
-                    $("#add_crm_description").val(data.crm_description);
-                }
-            });
-
-
-            $("#add_submit").click(function(){
-                $("#add_submit").css("display","none");
-                var add_hid =$("#add_hid").val();
-                //save bank
-                if(add_hid == ""){
-                    var add_description =$("#add_description").val();
-                    var add_assign_user =$("#add_assign_user").val();
-                    var add_credit_hid =$("#add_credit_hid").val();
-
-                    $.ajax({
-                    'type': 'ajax',
-                    'dataType': 'json',
-                    'method': 'post',
-                    'data' : {add_description:add_description,add_assign_user:add_assign_user,add_credit_hid:add_credit_hid},
-                    'url' : 'credit_note',
-                    'async': false,
-                    success:function(data){
-                        add_email_send();
-                        if(data.validation_error){
-                        validation_error(data.validation_error);//if has validation error call this function
-                        }
-
-                        if(data.db_error){
-                        db_error(data.db_error);
-                        }
-
-                        if(data.db_success){
-                            toastr.success(data.db_success);
-                        setTimeout(function(){
-                            $("#modal").modal('hide');
-                            location.reload();
-                        }, 2000);
-                        }
-
-                    },
-                    error: function(jqXHR, exception) {
-                        db_error(jqXHR.responseText);
-                    }
-                    });
-                };
-            });
-        });
-
-
         //complain edit
         $(document).on("click", ".edit", function(){
             $("#submit").css("display","none");
@@ -512,7 +321,7 @@
                     $("#awb").val(data.awb);
                     $("#calculation").val(data.calculation);
                     $("#crm_description").val(data.crm_description);
-                    $("#description").val(data.description);
+                    $("#description").html(data.description);
                 }
             });
             //user button click submit data to controller
@@ -569,126 +378,31 @@
             });
         });
 
-        //employee delete
-        $(document).on("click", ".delete", function(){
+        $(document).on("click", ".user_explanation", function(){
             var id = $(this).attr('data');
+            $("#modal_user_explantion").modal('show');
 
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            'type': 'ajax',
-                            'dataType': 'json',
-                            'method': 'delete',
-                            'url': 'employee/'+id,
-                            'async': false,
-                            success: function(data){
-
-                            if(data){
-                                toastr.success('Employee Deleted');
-                                setTimeout(function(){
-                                location.reload();
-                                }, 2000);
-
-                            }
-
-                            }
-                        });
-
-                    }
-
-            });
-
-        });
-
-        $(document).on("click", ".assign_user_", function(){
-
-            var id = $("#hid").val();
-            
             $.ajax({
                 'type': 'ajax',
                 'dataType': 'json',
                 'method': 'get',
-                'url': 'credit_note/assignuser/'+id,
+                'url': 'futher_explanation/'+id,
                 'async': false,
                 success: function(data){
-                    console.log(data);
-                    var html = "";
+                    
+                    for(var i = 0; i < data.length; i++){
+                        console.log(data[i].username);
+                        $("#title-hod").html(data[i].username);
+                        $("#hod_explanation_desc").val(data[i].futher_assign_hod_description);
 
-                    html+="<option value=''>-- select user --</option>";
- 
-                        for(var i =0; i < data.length; i++){
-                            html+="<option value='"+data[i].id+"'>"+data[i].email+"</option>";
-                        }
-
-                    $("#assign_user_one").html(html);
-                    //$("#assign_user_one").select2("destroy");
-
+                    }
                 }
-            });    
-
-        });
-
-        $(document).on("click", ".explanation", function(){
-            var descreption_id = $(this).attr('data');
-            var credit_note_id =$("#hid").val();
-            $("#modal_explantion").modal('show');
-
-            $("#futher_explanation_submit").click(function(){
-                // if(credit_note_id == ""){
-                    var further_assign_user =$("#further_assign_user").val();
-
-                    $.ajax({
-                        'type': 'ajax',
-                        'dataType': 'json',
-                        'method': 'post',
-                        'data' : {descreption_id:descreption_id,credit_note_id:credit_note_id,further_assign_user:further_assign_user},
-                        'url' : 'credit_note/futher_explanantion',
-                        'async': false,
-                        success:function(data){
-                            add_email_send();
-                            if(data.validation_error){
-                            validation_error(data.validation_error);//if has validation error call this function
-                            }
-
-                            if(data.db_error){
-                            db_error(data.db_error);
-                            }
-
-                            if(data.db_success){
-                                toastr.success(data.db_success);
-                            setTimeout(function(){
-                                $("#modal").modal('hide');
-                                location.reload();
-                            }, 2000);
-                            }
-
-                        },
-                        error: function(jqXHR, exception) {
-                            db_error(jqXHR.responseText);
-                        }
-                    });
-                //}
             });
-        });
 
-        $(document).on("click", ".user_explanation", function(){
-            var id = $(this).attr('data');
-            console.log(id);
-            $("#modal_user_explantion").modal('show');
 
             $("#user_futher_explanation_submit").click(function(){
                 // if(credit_note_id == ""){
                     var futher_explanation_desc =$("#futher_explanation_desc").val();
-
-                    console.log(futher_explanation_desc)
 
                     $.ajax({
                         'type': 'ajax',
@@ -722,82 +436,6 @@
                     });
                 //}
             });
-        });
-
-        $(document).on("click", ".approve", function(){
-            var id = $(this).attr('data');
-
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, approve it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            'type': 'ajax',
-                            'dataType': 'json',
-                            'method': 'get',
-                            'url': '/credit_note/approve/'+id,
-                            'async': false,
-                            success: function(data){
-
-                            if(data){
-                                toastr.success('Employee Deleted');
-                                setTimeout(function(){
-                                location.reload();
-                                }, 2000);
-
-                            }
-
-                            }
-                        });
-
-                    }
-
-            });
-
-        });
-
-        $(document).on("click", ".reject", function(){
-            var id = $(this).attr('data');
-
-            Swal.fire({ 
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Reject it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            'type': 'ajax',
-                            'dataType': 'json',
-                            'method': 'get',
-                            'url': '/credit_note/reject/'+id,
-                            'async': false,
-                            success: function(data){
-
-                            if(data){
-                                toastr.success('Employee Deleted');
-                                setTimeout(function(){
-                                location.reload();
-                                }, 2000);
-
-                            }
-
-                            }
-                        });
-
-                    }
-
-            });
-
         });
 
     });
@@ -846,35 +484,52 @@
         description.done(function(res){  
             var html = "";
 
-            for(var i=1;i<res.length;i++){
-            console.log(res[i].status);
-            html +="<div class='row'>";
-                html+='<input type="hidden" id="des_hid_'+i+'" name="des_hid_'+i+'" value='+res[i].id+'>';
-                html+='<input type="hidden" id="des_lenghth" name="des_lenghth" value='+res.length+'>';
-                html+='<div class="form-group col-md-6">';
-                    html+='<label>'+res[i].name+'</label>';
-                       html+='<textarea type="text" class="form-control" id="description_'+i+'" name="description_'+i+'" placeholder="Enter Description" required readonly>'+res[i].assign_user_description+'</textarea>';  
-                html+='</div>';
-                html+='<div class="form-group col-md-3" hidden>';
-                    html+='<label for="rate">Assign User</label>';
-                    html+='<input type="text" class="form-control" value='+res[i].name+' readonly>';
-                html+='</div>';
-                html+='<div class="form-group col-md-4">';
-                    html+='<div class="text-right">';
-                        if(res[i].status == '0'){
-                            @if ($roles->contains('role_id',5))
-                            html+='&nbsp;<button type="button" class="btn btn-outline-dark btn-sm user_explanation" data='+res[i].id+'>Further Explenation </button>'; 
-                            @endif
-                        }else if(res[i].status == '1'){
-                            @if ($roles->contains('role_id',5))
-                            html+='&nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-sm user_explanation" data='+res[i].id+'>Further Explenation </button>'; 
-                            @endif
-                        }
-
-                    html+='</div>';
-                html+='</div>';
-                html+='</div>';    
+            for(var i=0;i<res.length;i++){
+                html +='<div class="row">'
+                    html +='<div class="col-md-12">'
+                        html +='<div class="timeline">'
+                            html +='<div class="time-label">'
+                                html +='<span class="bg-red">Mr '+res[i].name+'</span>'
+                            html +='</div>'
+                            html +='<div>'
+                            html +='<i class="fas fa-envelope bg-blue"></i>'
+                            html +='<div class="timeline-item">'
+                                html +='<span class="time"><i class="fas fa-clock"></i>'+res[i].created_at+'</span>'
+                                html +='<h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>'
+                            html +='<div class="timeline-body">'
+                                html+=res[i].assign_user_description
+                            html +='</div>'
+                            html +='</div>'
+                            html +='</div>'
+                            html +='<div>'
+                                html +='<i class="fas fa-user bg-green"></i>'
+                                html +='<div class="timeline-item">'
+                                    html +='<span class="time"><i class="fas fa-clock"></i> '+res[i].updated_at+'</span>'
+                                    html +='<h3 class="timeline-header no-border"><a href="#">Assign by '+res[i].name+'</a> to You</h3>'
+                                    if(res[i].futher_assign_user_description == null){
+                                            @if ($roles->contains('role_id',5))
+                                            html+='&nbsp;<button type="button" class="btn btn-outline-dark btn-sm user_explanation" data='+res[i].id+'>Further Explenation </button>'; 
+                                            @endif                                      
+                                    }else{
+                                        html +='<div>'
+                                            html +='<i class="fas fa-comments bg-yellow"></i>'
+                                            html +='<div class="timeline-item">'
+                                                html +='<span class="time"><i class="fas fa-clock"></i> '+res[i].updated_at+'</span>'
+                                                html +='<h3 class="timeline-header"><a href="#">'+res[i].username+'</a> commented on your post</h3>'
+                                                html +='<div class="timeline-body">'
+                                                    html+=res[i].futher_assign_user_description
+                                                html +='</div>'
+                                            html +='</div>'
+                                        html +='</div>'
+                                    }
+                                    html+='</div>';
+                                html +='</div>'
+                                html +='</div>'
+                        html +='</div>'
+                    html +='</div>'
+                html +='</div>'
             }
+
             $("#assign_description_textarea").append(html);
             
         });
