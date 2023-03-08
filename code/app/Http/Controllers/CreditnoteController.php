@@ -30,6 +30,7 @@ class CreditnoteController extends Controller
         $result= DB::table('credit_notes')
                 ->join('users','users.id','=','credit_notes.user')
                 ->where('credit_notes.user',Auth::user()->id)
+                ->where('credit_notes.status',0)
                 ->select('users.name','credit_notes.*')
                 ->get();
 
@@ -142,7 +143,7 @@ class CreditnoteController extends Controller
                     ->join('users','users.id','=','credit_note_descriptions.assign_user_id')
                     // ->where('credit_note_descriptions.futher_assign_user_id','=','users.id')
                     ->where('credit_note_descriptions.credit_note_id',$id)
-                    ->select('users.name as username','users.name as name','credit_note_descriptions.assign_user_description','credit_note_descriptions.created_at','credit_note_descriptions.assign_user_id','credit_note_descriptions.id','credit_note_descriptions.status','credit_note_descriptions.updated_at','credit_note_descriptions.futher_assign_user_description')
+                    ->select('users.name as username','users.name as name','credit_note_descriptions.assign_user_description','credit_note_descriptions.created_at','credit_note_descriptions.assign_user_id','credit_note_descriptions.id','credit_note_descriptions.status','credit_note_descriptions.updated_at','credit_note_descriptions.futher_assign_user_description','credit_note_descriptions.futher_assign_hod_description')
                     ->get();
                     
         return response()->json($result); 

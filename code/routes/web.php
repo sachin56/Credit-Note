@@ -11,6 +11,7 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\FutherExplanationController;
 use App\Http\Controllers\CreditNoteHistoryController;
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +30,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home/chart',[HomeController::class,'monthly_creditnote_count']);
 
 //complain managment
 Route::get('/complain',[ComplainmanagmentController::class,'index']);

@@ -59,20 +59,6 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="rate">Credit Note Date </label>
-                            <input type="date" class="form-control" id="credit_date" name="credit_date" placeholder="Enter Credit Note amount">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="rate">Credit Note amount </label>
-                            <select name="credit_status" id="credit_status" class="form-control" required data-live-search="true" data-size="5">
-                                <option value="0">-- select User --</option>
-                                <option value="1">Pending</option>
-                                <option value="2">Close</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="form-group col-md-6">   
                             <label for="rate">Hiran</label>
                             <textarea  type="text" class="form-control" id="description" name="description" placeholder="Enter Description" required></textarea>
@@ -120,9 +106,11 @@
                     <table class="table table-bordered" id="datatables">
                         <thead>
                             <tr>
+                                <th style="width:20%">Reference Number</th>
                                 <th style="width:20%">Account Name</th>
                                 <th style="width:20%">AWB</th>
                                 <th style="width:20%">Assign User</th>
+                                <th style="width:20%">Priority</th>
                                 <th style="width:20%">Action</th>
                             </tr>
                         </thead>
@@ -342,9 +330,11 @@
                         'url': '/complain/esm'
                     },
             'columns': [
+                {data: "referenceNumber"},
                 {data: "name"},
                 {data: "aWB"},
                 {data: "assignedUserName"},
+                {data: "priority"},
                 {
                     data: null,
                     render: function(d){

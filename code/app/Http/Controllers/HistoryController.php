@@ -23,7 +23,11 @@ class HistoryController extends Controller
     }
 
     public function create(){
-        $result = credit_note::where('status',0)->get();
+        $result= DB::table('credit_notes')
+                ->join('users','users.id','=','credit_notes.user')
+                ->where('credit_notes.status',0)
+                ->select('users.name','credit_notes.*')
+                ->get();
 
         return DataTables($result)->make(true);
     }

@@ -50,7 +50,7 @@
                         </div>                   
                         <div class="form-group col-md-4">
                             <div class="text-right">
-                                <button type="button" class="btn btn-primary attachment">Attachment</button>
+                                <button type="button" class="btn btn-outline-primary attachment">Attachment</button>
                             </div>
                         </div>
                         <br>
@@ -71,7 +71,7 @@
                               <i class="fas fa-envelope bg-blue"></i>
                               <div class="timeline-item">
                                 <span class="time"><i class="fas fa-clock"></i> 12:05</span>
-                                <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+                                <h3 class="timeline-header"><a href="#">Credit Note Team</a> sent you an email</h3>
               
                                 <div class="timeline-body" id="description" name="description">
                 
@@ -495,7 +495,7 @@
                             html +='<i class="fas fa-envelope bg-blue"></i>'
                             html +='<div class="timeline-item">'
                                 html +='<span class="time"><i class="fas fa-clock"></i>'+res[i].created_at+'</span>'
-                                html +='<h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>'
+                                html +='<h3 class="timeline-header"><a href="#">Credit Note Team</a> sent you an email</h3>'
                             html +='<div class="timeline-body">'
                                 html+=res[i].assign_user_description
                             html +='</div>'
@@ -505,17 +505,17 @@
                                 html +='<i class="fas fa-user bg-green"></i>'
                                 html +='<div class="timeline-item">'
                                     html +='<span class="time"><i class="fas fa-clock"></i> '+res[i].updated_at+'</span>'
-                                    html +='<h3 class="timeline-header no-border"><a href="#">Assign by '+res[i].name+'</a> to You</h3>'
-                                    if(res[i].futher_assign_user_description == null){
+                                    html +='<h3 class="timeline-header no-border"><a href="#">Assign by mr '+res[i].name+'</a> to You</h3>'
+                                    if(res[i].futher_assign_user_id !== null){
                                             @if ($roles->contains('role_id',5))
-                                            html+='&nbsp;<button type="button" class="btn btn-outline-dark btn-sm user_explanation" data='+res[i].id+'>Further Explenation </button>'; 
+                                                html+='&nbsp;<button type="button" class="btn btn-outline-dark btn-sm user_explanation" data='+res[i].id+'>Further Explenation </button>'; 
                                             @endif                                      
                                     }else{
                                         html +='<div>'
                                             html +='<i class="fas fa-comments bg-yellow"></i>'
                                             html +='<div class="timeline-item">'
                                                 html +='<span class="time"><i class="fas fa-clock"></i> '+res[i].updated_at+'</span>'
-                                                html +='<h3 class="timeline-header"><a href="#">'+res[i].username+'</a> commented on your post</h3>'
+                                                html +='<h3 class="timeline-header"><a href="#"> mr '+res[i].username+'</a> commented on your post</h3>'
                                                 html +='<div class="timeline-body">'
                                                     html+=res[i].futher_assign_user_description
                                                 html +='</div>'
@@ -594,6 +594,12 @@
                         render: function(d){
                             var html = "";
                             html+="&nbsp;<button class='btn btn-danger btn-sm delete' data='"+d.id+"'title='Delete'><i class='fas fa-trash'></i></button>";
+                            html+='&nbsp;&nbsp;<i class="" style="color:red"> Assign to - &nbsp;'+d.name+'</i>&nbsp;&nbsp;';
+                            if (d.crdit_note_status == 1){
+                                html+='&nbsp;&nbsp;<i class="" style="color:green"> status - &nbsp; Pennding</i>&nbsp;&nbsp;';
+                            }else{
+                                html+='&nbsp;&nbsp;<i class="" style="color:red"> status - &nbsp; Close</i>&nbsp;&nbsp;';
+                            }
                             return html;
 
                         }

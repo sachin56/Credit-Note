@@ -25,6 +25,6 @@ class EmailController extends Controller
                     ->where('credit_notes.id',$id)
                     ->get();
        
-        \Mail::to($result,)->send(new \App\Mail\AssignUserMail($details));
+        \Mail::to($result)->cc(['hiran@fedexlk.com'])->send(new \App\Mail\AssignUserMail($details));
     }
 }

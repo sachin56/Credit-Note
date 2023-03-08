@@ -50,7 +50,7 @@
                         </div>                   
                         <div class="form-group col-md-4">
                             <div class="text-right">
-                                <button type="button" class="btn btn-primary attachment">Attachment</button>
+                                <button type="button" class="btn btn-outline-primary attachment">Attachment</button>
                             </div>
                         </div>
                         <br>
@@ -71,7 +71,7 @@
                                   <i class="fas fa-envelope bg-blue"></i>
                                   <div class="timeline-item">
                                     <span class="time"><i class="fas fa-clock"></i> 12:05</span>
-                                    <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+                                    <h3 class="timeline-header"><a href="#">Credit Note Team</a> sent you an email</h3>
                   
                                     <div class="timeline-body" id="description" name="description">
                     
@@ -242,11 +242,11 @@
                         <thead>
                             <tr>
                                 <th style="width:20%">Reference Name</th>
-                                <th style="width:20%">Customer Name</th>
+                                <th style="width:10%">Customer Name</th>
                                 <th style="width:20%">AWB</th>
                                 <th style="width:10%">Invoice No</th>
                                 <th style="width:10%">Credit Amount</th>
-                                <th style="width:30%">Action</th>
+                                <th style="width:35%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -421,6 +421,81 @@
                 }
             });
         });   
+        $(document).on("click", ".approve", function(){
+            var id = $(this).attr('data');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, approve it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            'type': 'ajax',
+                            'dataType': 'json',
+                            'method': 'get',
+                            'url': '/credit_note/approve/'+id,
+                            'async': false,
+                            success: function(data){
+
+                            if(data){
+                                toastr.success('Description Approved');
+                                setTimeout(function(){
+                                location.reload();
+                                }, 2000);
+
+                            }
+
+                            }
+                        });
+
+                    }
+
+            });
+
+        });
+
+        $(document).on("click", ".reject", function(){
+            var id = $(this).attr('data');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Reject it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            'type': 'ajax',
+                            'dataType': 'json',
+                            'method': 'get',
+                            'url': '/credit_note/reject/'+id,
+                            'async': false,
+                            success: function(data){
+
+                            if(data){
+                                toastr.error('Description Rejected');
+                                setTimeout(function(){
+                                location.reload();
+                                }, 2000);
+
+                            }
+
+                            }
+                        });
+
+                    }
+
+            });
+
+        });
 
     });
 
@@ -452,10 +527,37 @@
                                         html +='<i class="fas fa-envelope bg-blue"></i>'
                                         html +='<div class="timeline-item">'
                                             html +='<span class="time"><i class="fas fa-clock"></i>'+res[i].created_at+'</span>'
-                                            html +='<h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>'
+                                            html +='<h3 class="timeline-header"><a href="#">Credit Note Team</a> sent you an email</h3>'
                                         html +='<div class="timeline-body">'
                                             html+=res[i].assign_user_description
-                                            html+='<div class="text-right">';
+                                        html +='</div>'
+                                        html +='</div>'
+                                        html +='</div>'
+                                        html +='<div>'
+                                            html +='<i class="fas fa-user bg-green"></i>'
+                                            html +='<div class="timeline-item">'
+                                                html +='<span class="time"><i class="fas fa-clock"></i> '+res[i].updated_at+'</span>'
+                                                html +='<h3 class="timeline-header no-border"><a href="#">Assign by mr'+res[i].name+'</a> to '+res[i].username+'</h3>'
+                                            html +='</div>'
+                                            html +='</div>'
+                                            
+                                            html +='<div>'
+                                                html +='<i class="fas fa-comments bg-yellow"></i>'
+                                                html +='<div class="timeline-item">'
+                                                    html +='<span class="time"><i class="fas fa-clock"></i> '+res[i].updated_at+'</span>'
+                                                    html +='<h3 class="timeline-header"><a href="#">mr '+res[i].username+'</a> commented on your post</h3>'
+                                                    html +='<div class="timeline-body">'
+                                                        html+=res[i].futher_assign_hod_description
+                                                    html +='</div>'
+                                                html +='</div>'
+                                                html +='<div class="timeline-item">'
+                                                    html +='<span class="time"><i class="fas fa-clock"></i>'+res[i].updated_at+'</span>'
+                                                    html +='<h3 class="timeline-header"><a href="#"> mr '+res[i].username+'</a> commented on your post</h3>'
+                                                    html +='<div class="timeline-body">'
+                                                        html+=res[i].futher_assign_user_description
+                                                    html +='</div>'
+                                                html +='</div>'
+                                                html+='<div class="text-right">';
                                         if(res[i].status == '0'){
                                             html+='<i class="fa fa-check" style="color:green">Approve</i>&nbsp;&nbsp;';
                                             @if ($roles->contains('role_id',4))
@@ -468,25 +570,6 @@
                                         }
 
                                 html+='</div>';
-                                        html +='</div>'
-                                        html +='</div>'
-                                        html +='</div>'
-                                        html +='<div>'
-                                            html +='<i class="fas fa-user bg-green"></i>'
-                                            html +='<div class="timeline-item">'
-                                                html +='<span class="time"><i class="fas fa-clock"></i> '+res[i].updated_at+'</span>'
-                                                html +='<h3 class="timeline-header no-border"><a href="#">Assign by '+res[i].name+'</a> to '+res[i].username+'</h3>'
-                                            html +='</div>'
-                                            html +='</div>'
-                                            html +='<div>'
-                                                html +='<i class="fas fa-comments bg-yellow"></i>'
-                                                html +='<div class="timeline-item">'
-                                                    html +='<span class="time"><i class="fas fa-clock"></i> 27 mins ago</span>'
-                                                    html +='<h3 class="timeline-header"><a href="#">'+res[i].username+'</a> commented on your post</h3>'
-                                                    html +='<div class="timeline-body">'
-                                                        html+=res[i].futher_assign_user_description
-                                                    html +='</div>'
-                                                html +='</div>'
                                             html +='</div>'
                                     html +='</div>'
                                 html +='</div>'
@@ -528,6 +611,12 @@
                     render: function(d){
                         var html = "";
                         html+="&nbsp;&nbsp;<td><button class='btn btn-warning btn-sm edit' data='"+d.id+"' title='Edit'><i class='fas fa-edit' ></i></button>";
+                            html+='&nbsp;&nbsp;<i class="" style="color:red"> Assign to - &nbsp;'+d.name+'</i>&nbsp;&nbsp;';
+                        if (d.crdit_note_status == 1){
+                            html+='&nbsp;&nbsp;<i class="" style="color:green"> status - &nbsp; Pennding</i>&nbsp;&nbsp;';
+                        }else{
+                            html+='&nbsp;&nbsp;<i class="" style="color:red"> status - &nbsp; Close</i>&nbsp;&nbsp;';
+                        }
                         return html;
 
                     }

@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <style>
-        #loader {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100%;
-            background: rgba(0,0,0,0.75) url("/your_loading_image.gif") no-repeat center center;
-            z-index: 99999;
-        }
-            </style>
     <meta charset="UTF-8">
     <title>ADVEX</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
@@ -120,7 +107,7 @@
         <!-- Main Footer -->
         <footer class="main-footer">
              <div class="float-right d-none d-sm-block">
-                <b>Beta Version</b> 0.0.1
+                <b>Beta Version</b> 0.0.2
             </div> 
             <strong>Copyright &copy; 2023 <a href="https://mhe.lk/">Advantis Express</a>.</strong> All rights
             reserved.
