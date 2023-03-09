@@ -13,7 +13,7 @@ class EmailController extends Controller
     
     public function sendmail($id){
 
-        $test='lalindu.ja@fedexlk.com';
+        //$test='lalindu.ja@fedexlk.com';
 
         $result = DB::table('users')
                     ->where('users.id',$id)
@@ -25,6 +25,6 @@ class EmailController extends Controller
                     ->where('credit_notes.id',$id)
                     ->get();
        
-        \Mail::to($result)->cc(['hiran@fedexlk.com'])->send(new \App\Mail\AssignUserMail($details));
+        \Mail::to($result)->cc(['heshanmunasinghe@gmail.com'])->send(new \App\Mail\AssignUserMail($details));
     }
 }

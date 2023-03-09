@@ -13,40 +13,40 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form  id="myForm" enctype="multipart/form-data">
+                <form>
                     <input type="hidden" id="hid" name="hid">
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label for="rate">CCM Reference No.</label>
-                            <input type="text" class="form-control" id="reference_no" name="reference_no" placeholder="Enter CCM Reference No" readonly>
+                            <input type="text" class="form-control" id="reference_no" name="reference_no" placeholder="Enter CCM Reference No" >
                         </div>
                         <div class="form-group col-md-4">
                             <label for="rate">Customer Name</label>
-                            <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Enter Customer Name" readonly>
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Enter Customer Name" >
                         </div>
                         <div class="form-group col-md-4">
                             <label for="rate">Credit Note amount </label>
-                            <input type="text" class="form-control" id="credit_note_amount" name="credit_note_amount" placeholder="Enter Credit Note amount" readonly>
+                            <input type="text" class="form-control" id="credit_note_amount" name="credit_note_amount" placeholder="Enter Credit Note amount" >
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label for="rate">Invoice No.</label>
-                            <input type="text" class="form-control" id="invove_no" name="invove_no" placeholder="Enter Invoice No" readonly>
+                            <input type="text" class="form-control" id="invove_no" name="invove_no" placeholder="Enter Invoice No" >
                         </div>
                         <div class="form-group col-md-4">
                             <label for="levy">AWB No</label>
-                            <input type="text" class="form-control" id="awb" name="awb" placeholder="Enter AWB No" readonly>
+                            <input type="text" class="form-control" id="awb" name="awb" placeholder="Enter AWB No" >
                         </div>
                         <div class="form-group col-md-4">
                             <label for="rate">Calculation</label>
-                            <input type="text" class="form-control" id="calculation" name="calculation" placeholder="Enter Calculation" readonly>
+                            <input type="text" class="form-control" id="calculation" name="calculation" placeholder="Enter Calculation" >
                         </div>
                     </div>
                     <div class="row">   
                         <div class="form-group col-md-8">
                             <label for="rate">CRM Description</label>
-                            <textarea  type="text" class="form-control" id="crm_description" name="crm_description" placeholder="Enter Description" required readonly></textarea>
+                            <textarea  type="text" class="form-control" id="crm_description" name="crm_description" placeholder="Enter Description" required ></textarea>
                         </div>                   
                         <div class="form-group col-md-4">
                             <div class="text-right">
@@ -74,27 +74,25 @@
                     <div class="row">
                         <div class="col-md-12">
                           <!-- The time line -->
-                          <div class="timeline">
-                            <!-- timeline time label -->
-                            <div class="time-label">
-                              <span class="bg-red">Mr Hiran</span>
-                            </div>
-                            <!-- /.timeline-label -->
-                            <!-- timeline item -->
-                            <div>
-                              <i class="fas fa-envelope bg-blue"></i>
-                              <div class="timeline-item">
-                                <span class="time"><i class="fas fa-clock"></i> 12:05</span>
-                                <h3 class="timeline-header"><a href="#">Credit Note Team</a> sent you an email</h3>
-              
-                                <div class="timeline-body" id="description" name="description">
-                
+                            <div class="timeline">
+                                <!-- timeline time label -->
+                                <div class="time-label">
+                                <span class="bg-red">Mr Hiran</span>
                                 </div>
-                              </div>
+                                <!-- /.timeline-label -->
+                                <!-- timeline item -->
+                                <div>
+                                    <i class="fas fa-envelope bg-blue"></i>
+                                    <div class="timeline-item">
+                                        <span class="time"><i class="fas fa-clock"></i> 12:05</span>
+                                        <h3 class="timeline-header"><a href="#">Credit Note Team</a> sent you an email</h3>
+                                        <div class="timeline-body" id="description" name="description">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                     <div id="assign_description_textarea">
                         {{-- <button type="button" class="btn btn-primary" id='assign_description_textareas'>Add Section</button> --}}
                     </div>
@@ -104,7 +102,7 @@
             </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-outline-success submit" id="submit">Save changes</button>
+            <button type="button" class="btn btn-outline-success edit_submit" id="edit_submit">Save changes</button>
           </div>
       </div>
     </div>
@@ -397,16 +395,16 @@
 
         //complain edit
         $(document).on("click", ".edit", function(){
-            $("#submit").css("display","none");
+            // $("#submit").css("display","none");
             var id = $(this).attr('data');
 
-            empty_form();
+            // empty_form();
             
             $("#hid").val(id);
-            
+            $("#edit_submit").html('Update Credit Note');
             $("#modal").modal('show');
             $(".modal-title").html('Add Credit Note History');
-            $("#submit").html('Add Credit Note');
+
             assign_description();
             // description_app ();
             $.ajax({
@@ -424,17 +422,26 @@
                     $("#calculation").val(data.calculation);
                     $("#crm_description").val(data.crm_description);
                     $("#description").html(data.description);
+                    $("#credit_date").val(data.crdit_note_close_date);
+                    $("#credit_status").val(data.crdit_note_status);
                 }
             });
             //user button click submit data to controller
-            $("#submit").click(function(){
+            $("#edit_submit").click(function(){
 
                 if($("#hid").val() != ""){
+
                     var id =$("#hid").val();
-                    console.log(id);
-                    var description = $("#description").val();             
-                    var assign_user=$("#assign_user_one").val();
-                    var formData = new FormData($('#myForm')[0]);
+                    var reference_no = $("#reference_no").val();             
+                    var customer_name=$("#customer_name").val();
+                    var credit_note_amount=$("#credit_note_amount").val();
+                    var invove_no=$("#invove_no").val();
+                    var awb=$("#awb").val();
+                    var calculation=$("#calculation").val();
+                    var crm_description=$("#crm_description").val();
+                    var description=$("#description").val();
+                    var credit_date=$("#credit_date").val();
+                    var credit_status=$("#credit_status").val();
 
                     Swal.fire({
                             title: 'Are you sure?',
@@ -446,22 +453,21 @@
                             confirmButtonText: 'Yes, Update it!'
                             }).then((result) => {
                             if (result.isConfirmed) {
-                                
                                 $.ajax({
                                     'type': 'ajax',
                                     'dataType': 'json',
-                                    'method': 'post',
-                                    'data' : formData,
-                                    'url': 'credit_note/update',
+                                    'method': 'put',
+                                    'data' : {reference_no:reference_no,customer_name:customer_name,credit_note_amount:credit_note_amount,invove_no:invove_no,awb:awb,calculation:calculation,crm_description:crm_description,description:description,credit_date:credit_date,credit_status:credit_status},
+                                    'url': '/history/'+id,
                                     'async': false,
-                                    'processData': false,
-                                    'contentType': false,
                                     success:function(data){
+                                        
                                     if(data.validation_error){
                                         validation_error(data.validation_error);//if has validation error call this function
                                         }
 
                                         if(data.db_error){
+                                            console.log(data);
                                         db_error(data.db_error);
                                         }
 
@@ -588,8 +594,7 @@
                                         }else if(res[i].status == '1'){
                                             html+='<i class="fa fa-window-close" style="color:red">&nbsp;Reject</i>&nbsp;&nbsp;'; 
                                         }else{
-                                            html+='<button type="button" class="btn btn-outline-success btn-sm approve" data='+res[i].id+'>Approve</button>';
-                                            html+='&nbsp;&nbsp;<button type="button" class="btn btn-outline-danger btn-sm reject" data='+res[i].id+'>Reject</button>';
+                                            html+='<i class="fas fa-spinner" style="color:#ffcc00">&nbsp;Pending</i>&nbsp;&nbsp;'; 
                                         }
 
                                 html+='</div>';
@@ -630,14 +635,14 @@
                     data: null,
                     render: function(d){
                         var html = "";
-                        html+="&nbsp;&nbsp;<td><button class='btn btn-warning btn-sm edit' data='"+d.id+"' title='Edit'><i class='fas fa-edit' ></i></button>";
+                        html+="&nbsp;&nbsp;<td><button class='btn btn-primary btn-sm edit' data='"+d.id+"' title='Edit'><i class='fas fa-arrow-alt-circle-left'></i></i></button>";
                         html+="&nbsp;<button class='btn btn-danger btn-sm delete' data='"+d.id+"'title='Delete'><i class='fas fa-trash'></i></button>";
-                        html+="&nbsp;<button class='btn btn-success btn-sm download' data='"+d.id+"'title='File Download'><i class='fas fa-download'></i></button>";
-                        html+='&nbsp;&nbsp;<i class="" style="color:red"> Assign to - &nbsp;'+d.name+'</i>&nbsp;&nbsp;';
+                        html+="&nbsp;<button class='btn btn-success btn-sm download' data='"+d.id+"'title='File Download'><i class='fas fa-download'></i></button>";    
+                        html+='&nbsp;&nbsp;<i class="bg-dark" > Assign to - &nbsp;'+d.name+'</i>&nbsp;&nbsp;';
                                 if (d.crdit_note_status == 1){
-                                    html+='&nbsp;&nbsp;<i class="" style="color:green"> status - &nbsp; Pennding</i>&nbsp;&nbsp;';
+                                    html+='&nbsp;&nbsp;<i class="bg-warning"> status - &nbsp; Pennding</i>&nbsp;&nbsp;';
                                 }else{
-                                    html+='&nbsp;&nbsp;<i class="" style="color:red"> status - &nbsp; Close</i>&nbsp;&nbsp;';
+                                    html+='&nbsp;&nbsp;<i class="bg-danger" > status - &nbsp; Close</i>&nbsp;&nbsp;';
                                 }
                         return html;
 

@@ -198,7 +198,7 @@
                         <thead>
                             <tr>
                                 <th style="width:20%">Reference Name</th>
-                                <th style="width:20%">Customer Name</th>
+                                <th style="width:10%">Customer Name</th>
                                 <th style="width:20%">AWB</th>
                                 <th style="width:10%">Invoice No</th>
                                 <th style="width:10%">Credit Amount</th>
@@ -562,6 +562,12 @@
                     render: function(d){
                         var html = "";
                         html+="&nbsp;&nbsp;<td><button class='btn btn-warning btn-sm edit' data='"+d.id+"' title='Edit'><i class='fas fa-edit' ></i></button>";
+                            html+='&nbsp;&nbsp;<i class="bg-dark" > Assign to - &nbsp;'+d.name+'</i>&nbsp;&nbsp;';
+                                if (d.crdit_note_status == 1){
+                                    html+='&nbsp;&nbsp;<i class="bg-warning"> status - &nbsp; Pennding</i>&nbsp;&nbsp;';
+                                }else{
+                                    html+='&nbsp;&nbsp;<i class="bg-danger" > status - &nbsp; Close</i>&nbsp;&nbsp;';
+                                }
                         return html;
 
                     }
@@ -594,12 +600,6 @@
                         render: function(d){
                             var html = "";
                             html+="&nbsp;<button class='btn btn-danger btn-sm delete' data='"+d.id+"'title='Delete'><i class='fas fa-trash'></i></button>";
-                            html+='&nbsp;&nbsp;<i class="" style="color:red"> Assign to - &nbsp;'+d.name+'</i>&nbsp;&nbsp;';
-                            if (d.crdit_note_status == 1){
-                                html+='&nbsp;&nbsp;<i class="" style="color:green"> status - &nbsp; Pennding</i>&nbsp;&nbsp;';
-                            }else{
-                                html+='&nbsp;&nbsp;<i class="" style="color:red"> status - &nbsp; Close</i>&nbsp;&nbsp;';
-                            }
                             return html;
 
                         }

@@ -373,9 +373,6 @@
                               <td align="left">
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
-                                    <tr>
-                                      <td> <a href="credit_note" target="_blank">Call To Action</a> </td>
-                                    </tr>
                                   </tbody>
                                 </table>
                               </td>
@@ -383,6 +380,7 @@
                           </tbody>
                         </table>
                         <p><b>AWB:</b> {{ $detail->awb }}.</p>
+                        
                         <p>Good luck! Hope it works.</p>
                       </td>
                       @endforeach

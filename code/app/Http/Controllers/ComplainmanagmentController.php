@@ -96,15 +96,12 @@ class ComplainmanagmentController extends Controller
                 
                 $ceditnote->save();
 
-                $result = new credit_note_description;
+                // $result = new credit_note_description;
 
-                $result->credit_note_id = $ceditnote->id;
-                $result->assign_user_id = $request->assign_user;
+                // $result->credit_note_id = $ceditnote->id;
+                // $result->assign_user_id = $request->assign_user;
 
-                $result->save();
-
-
-                
+                // $result->save();
 
                 DB::commit();
                 return response()->json(['db_success' => 'Added New Credit Note']);

@@ -959,14 +959,14 @@
                     data: null,
                     render: function(d){
                         var html = "";
-                        html+="&nbsp;&nbsp;<td><button class='btn btn-primary btn-sm addNew' data='"+d.id+"' title='Add'><i class='fa fa-plus' ></i></button>";
-                        html+="&nbsp;&nbsp;<td><button class='btn btn-warning btn-sm edit' data='"+d.id+"' title='Edit'><i class='fas fa-edit' ></i></button>&nbsp;&nbsp;";
-                        html+='&nbsp;&nbsp;<i class="" style="color:red"> Assign to - &nbsp;'+d.name+'</i>&nbsp;&nbsp;';
-                        if (d.crdit_note_status == 1){
-                            html+='&nbsp;&nbsp;<i class="" style="color:green"> status - &nbsp; Pennding</i>&nbsp;&nbsp;';
-                        }else{
-                            html+='&nbsp;&nbsp;<i class="" style="color:red"> status - &nbsp; Close</i>&nbsp;&nbsp;';
-                        }
+                        html+="&nbsp;&nbsp;<td><button class='btn btn-secondary btn-sm addNew' data='"+d.id+"' title='Add'><i class='fa fa-plus' ></i></button>";
+                            html+="&nbsp;&nbsp;<td><button class='btn btn-primary btn-sm edit' data='"+d.id+"' title='Edit'><i class='fas fa-arrow-alt-circle-left'></i></i></button>";
+                                html+='&nbsp;&nbsp;<i class="bg-dark" > Assign to - &nbsp;'+d.name+'</i>&nbsp;&nbsp;';
+                                if (d.crdit_note_status == 1){
+                                    html+='&nbsp;&nbsp;<i class="bg-warning"> status - &nbsp; Pennding</i>&nbsp;&nbsp;';
+                                }else{
+                                    html+='&nbsp;&nbsp;<i class="bg-danger" > status - &nbsp; Close</i>&nbsp;&nbsp;';
+                                }
                         
                         return html;
 

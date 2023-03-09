@@ -80,6 +80,7 @@ Route::get('/credit_note_report/{id}',[C_note_reportController::class,'export'])
 
 Route::get('/history',[HistoryController::class,'index']);
 Route::get('/history/create',[HistoryController::class,'create']);
+Route::put('/history/{id}',[HistoryController::class,'update']);
 Route::delete('/history/{id}',[HistoryController::class,'destroy']);
 
 Route::get('/futher_explanation',[FutherExplanationController::class,'index']);

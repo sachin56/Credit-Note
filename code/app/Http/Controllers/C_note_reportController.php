@@ -33,6 +33,7 @@ class C_note_reportController extends Controller
 
         return $pdf->download('credit_note_'.date("Y-m-d H:i:s").'.pdf');   
         
+        
         // return Excel::download(new CreditNoteExport($request->id),'-'.date('Y-m-d:H-i-s').'.xlsx');
 
     }

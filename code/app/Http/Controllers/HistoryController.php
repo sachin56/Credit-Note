@@ -31,6 +31,45 @@ class HistoryController extends Controller
 
         return DataTables($result)->make(true);
     }
+
+    public function update(Request $request){
+        // dump($request);
+        $validator = Validator::make($request->all(), [
+            'credit_date' => 'required',
+            'credit_status' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['validation_error' => $validator->errors()->all()]);
+        }else{
+            try{
+                DB::beginTransaction();
+               
+                $result = credit_note::find($request->id);
+               
+                $result->reference_number = $request->reference_no;
+                $result->customer_name = $request->customer_name;
+                $result->credit_note_amount = $request->credit_note_amount;
+                $result->invoice_no = $request->invove_no;
+                $result->awb = $request->awb;
+                $result->calculation = $request->calculation;
+                $result->crm_description = $request->crm_description;
+                $result->crdit_note_close_date = $request->credit_date;
+                $result->crdit_note_status = $request->credit_status;
+                
+                $result->save();
+               
+                DB::commit();
+                return response()->json(['db_success' => 'Credit Note Updated']);
+
+            }catch(\Throwable $th){
+                DB::rollback();
+                throw $th;
+                return response()->json(['db_error' =>'Database Error'.$th]);
+            }
+
+        }
+    }
     
     public function destroy($id){
 
