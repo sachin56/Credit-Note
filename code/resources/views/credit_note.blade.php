@@ -150,18 +150,9 @@
                     </div>
                     <br>
                     <div class="row">
-                        <div class="form-group col-md-8">
+                        <div class="form-group col-md-12">
                             <label for="rate">{{Auth::user()->name}}</label>
                             <textarea  type="text" class="form-control" id="add_description" name="description" placeholder="Enter Description" required ></textarea>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="rate">Assign User</label>
-                            <select name="add_assign_user" id="add_assign_user" class="form-control" required data-live-search="true" data-size="5">
-                                <option value="">-- select User --</option>
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id}}">{{ $user->email}}</option>
-                                @endforeach
-                            </select>
                         </div>
                     </div>
                     <div class="card-header">
@@ -342,12 +333,13 @@
                     <table class="table table-bordered" id="datatables">
                         <thead>
                             <tr>
-                                <th style="width:15%">Reference Name</th>
+                                <th style="width:10%">Reference Name</th>
                                 <th style="width:15%">Customer Name</th>
-                                <th style="width:20%">AWB</th>
+                                <th style="width:10%">AWB</th>
                                 <th style="width:10%">Invoice No</th>
                                 <th style="width:10%">Credit Amount</th>
-                                <th style="width:35%">Action</th>
+                                <th style="width:10%">Action</th>
+                                <th style="width:30%">Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -960,13 +952,26 @@
                     render: function(d){
                         var html = "";
                         html+="&nbsp;&nbsp;<td><button class='btn btn-secondary btn-sm addNew' data='"+d.id+"' title='Add'><i class='fa fa-plus' ></i></button>";
-                            html+="&nbsp;&nbsp;<td><button class='btn btn-primary btn-sm edit' data='"+d.id+"' title='Edit'><i class='fas fa-arrow-alt-circle-left'></i></i></button>";
-                                html+='&nbsp;&nbsp;<i class="bg-dark" > Assign to - &nbsp;'+d.name+'</i>&nbsp;&nbsp;';
-                                if (d.crdit_note_status == 1){
-                                    html+='&nbsp;&nbsp;<i class="bg-warning"> status - &nbsp; Pennding</i>&nbsp;&nbsp;';
-                                }else{
-                                    html+='&nbsp;&nbsp;<i class="bg-danger" > status - &nbsp; Close</i>&nbsp;&nbsp;';
-                                }
+                        html+="&nbsp;&nbsp;<td><button class='btn btn-primary btn-sm edit' data='"+d.id+"' title='Edit'><i class='fas fa-arrow-alt-circle-left'></i></i></button>";
+                        
+                        return html;
+
+                    }
+
+                },
+                {
+                    data: null,
+                    render: function(d){
+                        var html = "";
+                        html+='&nbsp;&nbsp;<i class="bg-dark" > Assign to - &nbsp;'+d.name+'</i>&nbsp;&nbsp;';
+                        if (d.crdit_note_status == 1){
+                            html+='&nbsp;&nbsp;<i class="bg-warning"> status - &nbsp; Pennding</i>&nbsp;&nbsp;';
+                        }else if(d.crdit_note_status == 2){
+                            html+='&nbsp;&nbsp;<i class="bg-success" > status - &nbsp; Close</i>&nbsp;&nbsp;';
+                        }else{
+                            html+='&nbsp;&nbsp;<i class="bg-danger" > status - &nbsp; New</i>&nbsp;&nbsp;';
+                        }
+                        html+='&nbsp;&nbsp;<i class="bg-primary" >Futher Explain - &nbsp;'+d.futhername+'</i>&nbsp;&nbsp;';
                         
                         return html;
 

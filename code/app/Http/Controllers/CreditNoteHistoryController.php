@@ -20,6 +20,17 @@ class CreditNoteHistoryController extends Controller
         return view('credit_note_history')->with(['users'=>$users]);
     }
 
+    public function create(){
+        $result= DB::table('credit_notes')
+                ->Leftjoin('users as u1','u1.id','=','credit_notes.user',)
+                ->Leftjoin('users as u2','u2.id','=','credit_notes.futher_explanantion_user')
+                ->where('credit_notes.status',0)
+                ->select('u1.name as name','credit_notes.*','u2.name as futhername')
+                ->get();
+
+        return DataTables($result)->make(true);
+    }
+
     public function assign_description($id){
         
         $result = DB::table('credit_note_descriptions')

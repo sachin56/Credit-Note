@@ -33,6 +33,7 @@ foreach($creditnote as $value){
     $calculation= $value->calculation;
     $crm_description= $value->crm_description;
     $description= $value->description;
+    $created_at= $value->created_at;
 }
 ?>
 
@@ -41,7 +42,7 @@ foreach($creditnote as $value){
        
         <tr>
             <td style="width: 40px;text-align: left;padding:3px; border-bottom:none" colspan="3">Advantis Express (Pvt) Ltd</td>
-            <th style="width: 65px; padding:3px;font-size:15px" colspan="6" rowspan="2">CREDIT NOTE</th>
+            <th style="width: 65px; padding:3px;font-size:15px" colspan="6" rowspan="2" >CREDIT NOTE</th>
         </tr>
         <tr>
             <td style="width: 40px;text-align: left;padding:3px; border-top:none;border-bottom:none" colspan="3">200, Nawam Mawatha,</td>
@@ -87,26 +88,30 @@ foreach($creditnote as $value){
         <tr>
             <th style="width: 40px;text-align: left;padding:3px;" colspan="2">{{$result->username}}</th>
             <td style="width: 65px;text-align: left; padding:3px" colspan="8">{{$result->assign_user_description}}</td>
-        </tr>   
+        </tr>  
+        @if($result->futher_assign_user_description != null)
+        <tr>
+            <th style="width: 20px;  padding:3px" colspan="2">Futher Expanation</th>
+            <td style="width: 20px;  padding:3px" colspan="2">{{$result->futhername}}</td>
+            <td style="width: 65px; text-align: left; padding:3px;" colspan="8">{{$result->futher_assign_user_description}}</td>
+        </tr> 
+        @endif
         @endforeach
 
 
         <tr>
-            <td style="width: 30px; text-align: left;padding:3px">&nbsp;</td>
-            <td style="width: 100px;text-align: left;padding:3px"></td>
-            <td style="width: 40px;  padding:3px"></td>
-            <td style="width: 80px; text-align: right; padding:3px;"></td>
-            <td style="width: 40px;  padding:3px"></td>
-            <td style="width: 80px; text-align: right; padding:3px;"></td>
-            <td style="width: 40px;  padding:3px"></td>
-            <td style="width: 55px;  padding:3px"></td>
-            <td style="width: 80px; text-align: right; padding:3px"></td>
+            <td style="width: 80px; text-align: left;padding:3px">&nbsp;Generated Date</td>
+            <td style="width: 90px;text-align: left;padding:3px">{{$ldate = date('Y-m-d H:i:s');}}</td>
+            <td style="width: 60px;  padding:3px">Created at</td>
+            <td style="width: 85px; text-align: right; padding:3px;">{{$created_at}}</td>
+            <td style="width: 60px;  padding:3px">Created By</td>
+            <td style="width: 90px; text-align: right; padding:3px;">Hiran Nanayakara</td>
         </tr>
 
-        <!-- <tr>
+         <tr>
             <th style="width: 30px;text-align: left;padding:3px;" colspan="9">NOTE :*Attach Attendance sheets, Tax /Suspended Tax invoice, Invoice & other re]evant documetlts obtained from the Payee.+Bills to be prepared at the end of
 each month. * attached a letter frorr the Sub Contractor indicating dctails ol Bank Account fbr the purpose ofremittance fronr Head Otilce.</th>
-        </tr> -->
+        </tr>
     </table>
 
 

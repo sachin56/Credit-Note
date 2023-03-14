@@ -23,7 +23,14 @@ class FutherExplanationController extends Controller
     }
 
     public function create(){
-        $result = credit_note::where('futher_explanantion_user',Auth::user()->id)->get();
+
+        $result= DB::table('credit_notes')
+                ->Leftjoin('users as u1','u1.id','=','credit_notes.user',)
+                ->Leftjoin('users as u2','u2.id','=','credit_notes.futher_explanantion_user')
+                ->where('credit_notes.futher_explanantion_user',Auth::user()->id)
+                ->where('credit_notes.status',0)
+                ->select('u1.name as username','credit_notes.*','u2.name as futhername')
+                ->get();
 
         return DataTables($result)->make(true);
     }

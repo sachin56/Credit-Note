@@ -20,9 +20,11 @@ class C_note_reportController extends Controller
                 ->get();
 
         $creditnotedescription = DB::table('credit_note_descriptions')
-                ->join('users','users.id','credit_note_descriptions.assign_user_id')
+                //->join('users','users.id','credit_note_descriptions.assign_user_id')
+                ->Rightjoin('users as u1','u1.id','=','credit_note_descriptions.assign_user_id',)
+                ->Rightjoin('users as u2','u2.id','=','credit_note_descriptions.futher_assign_user_id')
                 ->where('credit_note_descriptions.credit_note_id',$id)
-                ->select('credit_note_descriptions.*','users.name as username')
+                ->select('credit_note_descriptions.*','u1.name as username','u2.name as futhername')
                 ->get();
         
         $data = array ('creditnote' => $creditnote,

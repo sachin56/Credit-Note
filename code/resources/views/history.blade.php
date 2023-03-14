@@ -234,28 +234,37 @@
     </div>
 </div>
 
-{{-- further explanation modal --}}
+{{-- assign user change --}}
 
-<div class="modal fade" id="modal_explantion">
-    <div class="modal-dialog modal-xl">
+<div class="modal fade" id="modal_assign_user_change">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Add Credit Note</h4>
+                <h4 class="modal-title">Assign User</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form  id="" enctype="multipart/form-data">
+                <form>
                     <input type="hidden" id="attachment_hid" name="attachment_hid">
                     <div class="row">
-                        <div class="form-group col-md-8">
-                            <label for="rate">Explanation</label>
-                            <textarea type="text" class="form-control" id="attachement_path" name="attachement_path" placeholder="Enter CCM Reference No"></textarea>
+                        <div class="form-group col-md-12">
+                            <span class="time"><i class="fas fa-clock"></i> credated at :</span>
+                            <textarea type="text" class="form-control" id="assign_user_change_description" name="assign_user_change_description"></textarea>
+                            
                         </div>
-                        <div class="form-group col-md-4">
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <span class="assign_userfuther_description"><i class="fas fa-clock"></i> credated at :</span>
+                            <textarea type="text" class="form-control" id="assign_user_change_futher_description" name="assign_user_change_futher_description"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
                             <label for="rate">Assign User</label>
-                            <select name="further_assign_user" id="further_assign_user" class="form-control" required data-live-search="true" data-size="5">
+                            <select name="assign_user_change" id="assign_user_change" class="form-control" required data-live-search="true" data-size="5">
                                 <option value="">-- select User --</option>
                                 @foreach($users as $user)
                                     <option value="{{ $user->id}}">{{ $user->email}}</option>
@@ -263,11 +272,12 @@
                             </select>
                         </div>
                     </div>
+                
                 </form>
             </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-outline-primary attachment_submit" id="attachment_submit">Save changes</button>
+            <button type="button" class="btn btn-outline-primary user_change_submit" id="user_change_submit">Save changes</button>
           </div>
       </div>
     </div>
@@ -297,12 +307,13 @@
                     <table class="table table-bordered" id="datatables">
                         <thead>
                             <tr>
-                                <th style="width:20%">Reference Name</th>
-                                <th style="width:10%">Customer Name</th>
-                                <th style="width:20%">AWB</th>
+                                <th style="width:10%">Reference Name</th>
+                                <th style="width:15%">Customer Name</th>
+                                <th style="width:10%">AWB</th>
                                 <th style="width:10%">Invoice No</th>
                                 <th style="width:10%">Credit Amount</th>
-                                <th style="width:35%">Action</th>
+                                <th style="width:10%">Action</th>
+                                <th style="width:30%">Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -486,8 +497,80 @@
             });
         });
 
-        //employee delete
-        $(document).on("click", ".delete", function(){
+        //assign user change
+        $(document).on("click", ".user_assign", function(){
+            var id = $(this).attr('data');
+            console.log(id);
+            var credit_not_id =$("#hid").val();
+
+            $("#user_change_submit").html('Update Assign User');
+            $("#modal_assign_user_change").modal('show');
+
+            $.ajax({
+                'type': 'ajax',
+                'dataType': 'json',
+                'method': 'get',
+                'url': 'history/'+id,
+                'async': false,
+                success: function(data){
+                    for(var i = 0; i < data.length; i++){
+                        $(".time").html(data[i].username)
+                        $("#assign_user_change_description").val(data[i].assign_user_description);
+                        $(".assign_userfuther_description").html(data[i].futherusername)
+                        $("#assign_user_change_futher_description").val(data[i].futher_assign_user_description);
+                    }
+                }
+            });
+            $("#user_change_submit").click(function(){
+
+                var assign_user_change = $("#assign_user_change").val();
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Update it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                'type': 'ajax',
+                                'dataType': 'json',
+                                'method': 'post',
+                                'data' :{id:id,credit_not_id:credit_not_id,assign_user_change:assign_user_change},
+                                'url': 'history/assign_user_change',
+                                'async': false,
+                                success: function(data){
+
+                                if(data){
+                                    toastr.success('User Assign');
+                                    setTimeout(function(){
+                                    location.reload();
+                                    }, 2000);
+
+                                }
+
+                                }
+                            });
+
+                        }
+
+                });
+            });
+        });
+
+        //credit note report download
+        $(document).on("click", ".download", function(){
+            var id = $(this).attr('data');
+
+            window.open('credit_note_report/'+id, '_blank');
+
+        });
+
+            //credit note delete
+            $(document).on("click", ".delete", function(){
             var id = $(this).attr('data');
 
             Swal.fire({
@@ -522,13 +605,6 @@
                     }
 
             });
-
-        });
-
-        $(document).on("click", ".download", function(){
-            var id = $(this).attr('data');
-
-            window.open('credit_note_report/'+id, '_blank');
 
         });
     });
@@ -588,13 +664,16 @@
                                     html +='</div>'
                                     html+='<div class="text-right">';
                                         if(res[i].status == '0'){
+                                            html +='<br>'
                                             html+='<i class="fa fa-check" style="color:green">Approve</i>&nbsp;&nbsp;';
-                                            @if ($roles->contains('role_id',4))
-                                            @endif
+                                            html+='<button type="button" class="btn btn-outline-dark btn-sm user_assign" data='+res[i].id+'>Edit</button>';
                                         }else if(res[i].status == '1'){
+                                            html +='<br>'
                                             html+='<i class="fa fa-window-close" style="color:red">&nbsp;Reject</i>&nbsp;&nbsp;'; 
+                                            html+='<button type="button" class="btn btn-outline-dark btn-sm user_assign" data='+res[i].id+'>Edit</button>';
                                         }else{
-                                            html+='<i class="fas fa-spinner" style="color:#ffcc00">&nbsp;Pending</i>&nbsp;&nbsp;'; 
+                                            html +='<br>'
+                                            html+='<i class="fas fa-spinner" style="color:#ffcc00">&nbsp;Pending</i>&nbsp;&nbsp;';
                                         }
 
                                 html+='</div>';
@@ -638,12 +717,25 @@
                         html+="&nbsp;&nbsp;<td><button class='btn btn-primary btn-sm edit' data='"+d.id+"' title='Edit'><i class='fas fa-arrow-alt-circle-left'></i></i></button>";
                         html+="&nbsp;<button class='btn btn-danger btn-sm delete' data='"+d.id+"'title='Delete'><i class='fas fa-trash'></i></button>";
                         html+="&nbsp;<button class='btn btn-success btn-sm download' data='"+d.id+"'title='File Download'><i class='fas fa-download'></i></button>";    
+
+                        return html;
+
+                    }
+
+                },
+                {
+                    data: null,
+                    render: function(d){
+                        var html = "";    
                         html+='&nbsp;&nbsp;<i class="bg-dark" > Assign to - &nbsp;'+d.name+'</i>&nbsp;&nbsp;';
-                                if (d.crdit_note_status == 1){
+                        if (d.crdit_note_status == 1){
                                     html+='&nbsp;&nbsp;<i class="bg-warning"> status - &nbsp; Pennding</i>&nbsp;&nbsp;';
+                                }else if(d.crdit_note_status == 2){
+                                    html+='&nbsp;&nbsp;<i class="bg-success" > status - &nbsp; Close</i>&nbsp;&nbsp;';
                                 }else{
-                                    html+='&nbsp;&nbsp;<i class="bg-danger" > status - &nbsp; Close</i>&nbsp;&nbsp;';
+                                    html+='&nbsp;&nbsp;<i class="bg-danger" > status - &nbsp; New</i>&nbsp;&nbsp;';
                                 }
+                                html+='&nbsp;&nbsp;<i class="bg-primary" > Assign to - &nbsp;'+d.futhername+'</i>&nbsp;&nbsp;';
                         return html;
 
                     }

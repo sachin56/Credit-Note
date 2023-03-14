@@ -91,7 +91,7 @@ class ComplainmanagmentController extends Controller
                 $ceditnote->assign_user = $request->assign_user;
                 $ceditnote->status = 0;
                 $ceditnote->user = $request->assign_user;
-                $ceditnote->crdit_note_status = $request->credit_status;
+                $ceditnote->crdit_note_status = 3;
                 $ceditnote->crdit_note_close_date = $request->credit_date;
                 
                 $ceditnote->save();

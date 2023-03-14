@@ -197,12 +197,13 @@
                     <table class="table table-bordered" id="datatables">
                         <thead>
                             <tr>
-                                <th style="width:20%">Reference Name</th>
-                                <th style="width:10%">Customer Name</th>
-                                <th style="width:20%">AWB</th>
+                                <th style="width:10%">Reference Name</th>
+                                <th style="width:15%">Customer Name</th>
+                                <th style="width:10%">AWB</th>
                                 <th style="width:10%">Invoice No</th>
                                 <th style="width:10%">Credit Amount</th>
-                                <th style="width:30%">Action</th>
+                                <th style="width:10%">Action</th>
+                                <th style="width:30%">Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -506,8 +507,9 @@
                                 html +='<div class="timeline-item">'
                                     html +='<span class="time"><i class="fas fa-clock"></i> '+res[i].updated_at+'</span>'
                                     html +='<h3 class="timeline-header no-border"><a href="#">Assign by mr '+res[i].name+'</a> to You</h3>'
-                                    if(res[i].futher_assign_user_id !== null){
+                                    if(res[i].futher_assign_user_description == null){
                                             @if ($roles->contains('role_id',5))
+                                                html+='<br>'
                                                 html+='&nbsp;<button type="button" class="btn btn-outline-dark btn-sm user_explanation" data='+res[i].id+'>Further Explenation </button>'; 
                                             @endif                                      
                                     }else{
@@ -515,7 +517,7 @@
                                             html +='<i class="fas fa-comments bg-yellow"></i>'
                                             html +='<div class="timeline-item">'
                                                 html +='<span class="time"><i class="fas fa-clock"></i> '+res[i].updated_at+'</span>'
-                                                html +='<h3 class="timeline-header"><a href="#"> mr '+res[i].username+'</a> commented on your post</h3>'
+                                                html +='<h5 class="timeline-header"><a href="#"> mr '+res[i].username+'</a> commented on your post</h5>'
                                                 html +='<div class="timeline-body">'
                                                     html+=res[i].futher_assign_user_description
                                                 html +='</div>'
@@ -562,12 +564,25 @@
                     render: function(d){
                         var html = "";
                         html+="&nbsp;&nbsp;<td><button class='btn btn-warning btn-sm edit' data='"+d.id+"' title='Edit'><i class='fas fa-edit' ></i></button>";
-                            html+='&nbsp;&nbsp;<i class="bg-dark" > Assign to - &nbsp;'+d.name+'</i>&nbsp;&nbsp;';
-                                if (d.crdit_note_status == 1){
-                                    html+='&nbsp;&nbsp;<i class="bg-warning"> status - &nbsp; Pennding</i>&nbsp;&nbsp;';
-                                }else{
-                                    html+='&nbsp;&nbsp;<i class="bg-danger" > status - &nbsp; Close</i>&nbsp;&nbsp;';
-                                }
+   
+                        return html;
+
+                    }
+
+                },
+                {
+                    data: null,
+                    render: function(d){
+                        var html = "";
+                        html+='&nbsp;&nbsp;<i class="bg-dark" > Assign to - &nbsp;'+d.username+'</i>&nbsp;&nbsp;';
+                        if (d.crdit_note_status == 1){
+                                html+='&nbsp;&nbsp;<i class="bg-warning"> status - &nbsp; Pennding</i>&nbsp;&nbsp;';
+                            }else if(d.crdit_note_status == 2){
+                                html+='&nbsp;&nbsp;<i class="bg-success" > status - &nbsp; Close</i>&nbsp;&nbsp;';
+                            }else{
+                                html+='&nbsp;&nbsp;<i class="bg-danger" > status - &nbsp; New</i>&nbsp;&nbsp;';
+                            }
+                            html+='&nbsp;&nbsp;<i class="bg-primary" > Assign to - &nbsp;'+d.futhername+'</i>&nbsp;&nbsp;';    
                         return html;
 
                     }

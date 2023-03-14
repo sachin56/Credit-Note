@@ -28,10 +28,11 @@ class CreditnoteController extends Controller
     public function create(){
         
         $result= DB::table('credit_notes')
-                ->join('users','users.id','=','credit_notes.user')
+                ->Leftjoin('users as u1','u1.id','=','credit_notes.user',)
+                ->Leftjoin('users as u2','u2.id','=','credit_notes.futher_explanantion_user')
                 ->where('credit_notes.user',Auth::user()->id)
                 ->where('credit_notes.status',0)
-                ->select('users.name','credit_notes.*')
+                ->select('u1.name as name','credit_notes.*','u2.name as futhername')
                 ->get();
 
         return DataTables($result)->make(true);
@@ -41,7 +42,7 @@ class CreditnoteController extends Controller
 
         $validator = Validator::make($request->all(), [
             'add_description' => 'required',
-            'add_assign_user' => 'required',
+            // 'add_assign_user' => 'required',
         ]);
 
         if($validator->fails()){
@@ -140,7 +141,7 @@ class CreditnoteController extends Controller
     public function assign_description($id){
         
         $result = DB::table('credit_note_descriptions')
-                    ->join('users','users.id','=','credit_note_descriptions.assign_user_id')
+                    ->Leftjoin('users','users.id','=','credit_note_descriptions.assign_user_id')
                     // ->where('credit_note_descriptions.futher_assign_user_id','=','users.id')
                     ->where('credit_note_descriptions.credit_note_id',$id)
                     ->select('users.name as username','users.name as name','credit_note_descriptions.assign_user_description','credit_note_descriptions.created_at','credit_note_descriptions.assign_user_id','credit_note_descriptions.id','credit_note_descriptions.status','credit_note_descriptions.updated_at','credit_note_descriptions.futher_assign_user_description','credit_note_descriptions.futher_assign_hod_description')
