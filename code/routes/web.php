@@ -11,6 +11,7 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\FutherExplanationController;
 use App\Http\Controllers\CreditNoteHistoryController;
+use App\Http\Controllers\ApiUserController;
 use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,9 @@ use App\Http\Controllers\HomeController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//one login
+Route::post('onelogin/{id}',[ApiUserController::class,'login'])->middleware(EnsureTokenIsValid::class);
 
 Auth::routes();
 
@@ -59,6 +63,7 @@ Route::get('/creditnote_attachment/{id}',[CreditnoteAttachmentController::class,
 //email
 Route::get('/email/{id}',[EmailController::class,'sendmail']);
 Route::get('/approve_email/{id}',[EmailController::class,'approve_email']);
+Route::get('/reject_email/{id}',[EmailController::class,'reject_email']);
 
 
 //user

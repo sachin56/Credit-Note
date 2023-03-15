@@ -159,7 +159,6 @@ class CreditnoteController extends Controller
     }
 
     public function approve($id){
-dump($id);
         try{
             
             DB::beginTransaction();
@@ -181,7 +180,7 @@ dump($id);
     }
 
     public function reject($id){
-
+dump($id);
         try{
             
             DB::beginTransaction();

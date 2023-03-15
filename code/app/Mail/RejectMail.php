@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ApproveMail extends Mailable
+class RejectMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $details;
@@ -29,6 +29,6 @@ class ApproveMail extends Mailable
     public function build()
     {
         return $this->subject('Mail from AdvantisExpress')
-                    ->view('email.approve_mail');
+                    ->view('email.reject_mail');
     }
 }

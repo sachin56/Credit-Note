@@ -473,6 +473,7 @@
                 confirmButtonText: 'Yes, Reject it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        reject_email(id);
                         $.ajax({
                             'type': 'ajax',
                             'dataType': 'json',
@@ -593,6 +594,20 @@
             'dataType': 'json',
             'method': 'get',
             'url': 'approve_email/'+id,
+            'async': false,
+            success: function(data){
+                console.log('email sent');
+            }
+        })  
+    }
+
+    function reject_email(id){
+
+        $.ajax({
+            'type': 'ajax',
+            'dataType': 'json',
+            'method': 'get',
+            'url': 'reject_email/'+id,
             'async': false,
             success: function(data){
                 console.log('email sent');
