@@ -435,6 +435,7 @@
                 confirmButtonText: 'Yes, approve it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        approve_email(id);
                         $.ajax({
                             'type': 'ajax',
                             'dataType': 'json',
@@ -442,7 +443,6 @@
                             'url': '/credit_note/approve/'+id,
                             'async': false,
                             success: function(data){
-
                             if(data){
                                 toastr.success('Description Approved');
                                 setTimeout(function(){
@@ -583,6 +583,21 @@
             $("#assign_description_textarea").append(html);
             
         });
+    }
+    
+    //email to when user approve or
+    function approve_email(id){
+
+        $.ajax({
+            'type': 'ajax',
+            'dataType': 'json',
+            'method': 'get',
+            'url': 'approve_email/'+id,
+            'async': false,
+            success: function(data){
+                console.log('email sent');
+            }
+        })  
     }
 
     //Data Table show

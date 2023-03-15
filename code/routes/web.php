@@ -58,6 +58,7 @@ Route::get('/creditnote_attachment/{id}',[CreditnoteAttachmentController::class,
 
 //email
 Route::get('/email/{id}',[EmailController::class,'sendmail']);
+Route::get('/approve_email/{id}',[EmailController::class,'approve_email']);
 
 
 //user

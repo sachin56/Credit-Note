@@ -843,15 +843,15 @@
         var id =$("#add_assign_user").val();
 
         $.ajax({
-                'type': 'ajax',
-                'dataType': 'json',
-                'method': 'get',
-                'url': 'email/'+id,
-                'async': false,
-                success: function(data){
-                    console.log('email sent');
-                }
-            })  
+            'type': 'ajax',
+            'dataType': 'json',
+            'method': 'get',
+            'url': 'email/'+id,
+            'async': false,
+            success: function(data){
+                console.log('email sent');
+            }
+        })  
     }
 
     function assign_description() {
